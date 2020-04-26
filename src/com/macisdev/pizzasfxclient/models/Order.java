@@ -10,6 +10,7 @@ public class Order {
 	private SimpleStringProperty customerName;
 	private SimpleStringProperty customerPhone;
 	private SimpleStringProperty customerAddress;
+	private SimpleStringProperty orderDateTime;
 	private SimpleStringProperty deliveryMethod;
 	private SimpleStringProperty paymentMethod;
 	
@@ -17,7 +18,8 @@ public class Order {
 	
 	private ArrayList<OrderElement> orderElements = new ArrayList<>();
 
-	public Order(String orderId, String customerName, String customerPhone, String customerAddress, String deliveryMethod, String paymentMethod, double totalPrice) {
+	public Order(String orderId, String customerName, String customerPhone, String customerAddress,
+				 String deliveryMethod, String paymentMethod, double totalPrice, String orderDateTime) {
 		this.orderId = new SimpleStringProperty(orderId);
 		this.customerName = new SimpleStringProperty(customerName);
 		this.customerPhone = new SimpleStringProperty(customerPhone);
@@ -25,6 +27,7 @@ public class Order {
 		this.deliveryMethod = new SimpleStringProperty(deliveryMethod);
 		this.totalPrice = new SimpleDoubleProperty(totalPrice);
 		this.paymentMethod = new SimpleStringProperty(paymentMethod);
+		this.orderDateTime = new SimpleStringProperty(orderDateTime);
 	}
 	
 	public Order() {
@@ -39,8 +42,14 @@ public class Order {
 		this.orderId = new SimpleStringProperty(orderId);
 	}
 
-	
-	
+	public String getOrderDateTime() {
+		return orderDateTime.get();
+	}
+
+	public void setOrderDateTime(String orderDateTime) {
+		this.orderDateTime = new SimpleStringProperty(orderDateTime);
+	}
+
 	public String getCustomerName() {
 		return customerName.get();
 	}
@@ -78,12 +87,17 @@ public class Order {
 	}
 
 	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = new SimpleStringProperty(paymentMethod);;
+		this.paymentMethod = new SimpleStringProperty(paymentMethod);
 	}
 
-	public double getTotalPrice() {
+	public double getTotalPriceRaw() {
 		return totalPrice.get();
 	}
+
+	public String getTotalPrice() {
+		return String.format("%.2f€", getTotalPriceRaw());
+	}
+
 
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = new SimpleDoubleProperty(totalPrice);
@@ -105,6 +119,6 @@ public class Order {
 	@Override
 	public String toString() {
 		return String.format(" ID: %s%n Name: %s%n Phone: %s%n Delivery: %s%n Address: %s%n Payment: %s%n Price: %f%n",
-				getOrderId(), getCustomerName(), getCustomerPhone(), getDeliveryMethod(), getCustomerAddress(), getPaymentMethod(), getTotalPrice());
+				getOrderId(), getCustomerName(), getCustomerPhone(), getDeliveryMethod(), getCustomerAddress(), getPaymentMethod(), getTotalPriceRaw());
 	}	
 }

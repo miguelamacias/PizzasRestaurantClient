@@ -21,14 +21,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Admin
- */
 public class OrderDetailsViewController implements Initializable {
 	//The list of elements of the order
-	private ObservableList<OrderElement> orderElementsList = FXCollections.observableArrayList();
+	private final ObservableList<OrderElement> orderElementsList = FXCollections.observableArrayList();
 	//Contains the current order of this window
 	private Order order;
 	
@@ -49,6 +44,12 @@ public class OrderDetailsViewController implements Initializable {
 
     @FXML
     private TextField tfPaymentMethod;
+
+	@FXML
+	private TextField tfDate;
+
+	@FXML
+	private TextField tfTime;
 	
 	@FXML
     private TableView<OrderElement> elementsTable;
@@ -91,7 +92,9 @@ public class OrderDetailsViewController implements Initializable {
 		tfCustomerPhone.setText(order.getCustomerPhone());
 		tfCustomerAddress.setText(order.getCustomerAddress());
 		tfPaymentMethod.setText(order.getPaymentMethod());
-		tfTotalPrice.setText(String.valueOf(order.getTotalPrice()));
+		tfTotalPrice.setText(order.getTotalPrice());
+		tfDate.setText(order.getOrderDateTime().substring(0, 10));
+		tfTime.setText(order.getOrderDateTime().substring(13, 21));
 		
 		//Loads the elements of the order in the table
 		orderElementsList.addAll(order.getOrderElements());

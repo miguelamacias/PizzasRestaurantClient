@@ -6,9 +6,9 @@
 package com.macisdev.pizzasfxclient.utils;
 
 import com.macisdev.pizzasfxclient.models.Order;
-import com.macisdev.pizzasfxclient.models.Order;
 import com.macisdev.pizzasfxclient.models.OrderElement;
 import java.io.StringReader;
+import java.time.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
@@ -17,10 +17,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-/**
- *
- * @author Admin
- */
+
 public class ParserXML {
 	public static Order parseXmlToOrder(String xml) throws Exception {
 		Order order = new Order();
@@ -31,9 +28,11 @@ public class ParserXML {
 		NodeList orderInfo = document.getElementsByTagName("order_info");
 		
 		Node nodeOrderInfo = orderInfo.item(0);
+
 		Element elementOrderInfo = (Element) nodeOrderInfo;
-		
-		order.setOrderId(elementOrderInfo.getElementsByTagName("order_id").item(0).getTextContent());
+		String orderId = elementOrderInfo.getElementsByTagName("order_id").item(0).getTextContent();
+		order.setOrderId(orderId);
+		order.setOrderDateTime(parseDateTime(Long.parseLong(orderId)));
 		order.setCustomerName(elementOrderInfo.getElementsByTagName("customer_name").item(0).getTextContent());
 		order.setCustomerPhone(elementOrderInfo.getElementsByTagName("customer_phone").item(0).getTextContent());
 		order.setDeliveryMethod(elementOrderInfo.getElementsByTagName("delivery_method").item(0).getTextContent());
@@ -64,5 +63,13 @@ public class ParserXML {
 			}			
 		}		
 		return order;
+	}
+
+	public static String parseDateTime(long milliSeconds) {
+		ZonedDateTime dateTime = ZonedDateTime.ofInstant(Instant.ofEpochMilli(milliSeconds), ZoneId.systemDefault());
+
+		return String.format("%02d/%02d/%d - %02d:%02d:%02d",
+				dateTime.getDayOfMonth(), dateTime.getMonth().getValue(), dateTime.getYear(),
+				dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
 	}
 }
