@@ -24,13 +24,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MainViewController implements Initializable {
-	private ObservableList<Order> orderList = FXCollections.observableArrayList();
+	private static ObservableList<Order> orderList = FXCollections.observableArrayList();
 	
 	@FXML
 	private TableView<Order> orderTable;
@@ -71,7 +72,7 @@ public class MainViewController implements Initializable {
 		}).start();
 		
 		
-		//Config the table
+		//Creates the columns of the table
 		TableColumn orderIdColumn = new TableColumn("Cod. pedido");
 		orderIdColumn.setCellValueFactory(new PropertyValueFactory("orderId"));
 		
@@ -92,35 +93,38 @@ public class MainViewController implements Initializable {
 		
 		TableColumn totalPriceColumn = new TableColumn("Importe");
 		totalPriceColumn.setCellValueFactory(new PropertyValueFactory("totalPrice"));
-		
-		orderTable.setItems(orderList);
+
+		//Adds the created columns to the table
 		orderTable.getColumns().addAll(orderIdColumn, customerNameColumn, customerPhoneColumn, customerAddressColumn,
 				deliveryMethodColumn, paymentMethodColumn, totalPriceColumn);
-		
+
+		//Sets the datasource for the table
+		orderTable.setItems(orderList);
 	}	
 	
-	//Opens a new window that shows the details for the selected order.
+	//Opens a window that shows the details of the selected order.
 	@FXML
     void openOrderDetailsWindow(MouseEvent event) {
 		if (event.getClickCount() == 2) {
 			try {
-				//Creates a new window and loads its fxml file
+				//Creates a new window and sets its fxml file
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OrderDetailsView.fxml"));
 				Parent root = (Parent) fxmlLoader.load();
 				Stage stage = new Stage();
 				stage.setScene(new Scene(root));
 				
 				//configures the new window
+				stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/pizza_icon.png")));
 				stage.setResizable(false);
 				stage.setTitle("Detalles del pedido");
 				stage.initModality(Modality.NONE);
-				stage.initStyle(StageStyle.UTILITY);
+				stage.initStyle(StageStyle.DECORATED);
 				
 				//Gets the controller associated to the fxml to pass it the order selected
-				OrderDetailsViewController newWindowController = fxmlLoader.getController();
+				OrderDetailsViewController detailsWindowController = fxmlLoader.getController();
 				Order order = orderTable.getSelectionModel().getSelectedItem();
-				newWindowController.setOrder(order);
-				newWindowController.loadOrder();
+				detailsWindowController.setOrder(order);
+				detailsWindowController.loadOrder();
 				
 				//Shows the new window
 				stage.show();
@@ -130,18 +134,13 @@ public class MainViewController implements Initializable {
 		}
     }
 	
-	//Written as a simple test, but it can be useful as a stub for the real method
-	@FXML
-	private void getPizzasFromServer(ActionEvent event) {
-		PizzaService_Service service = new PizzaService_Service();
-		PizzaService pizzaService = service.getPizzaServicePort();
-		List<String> pizzaList = pizzaService.getOrders();
-		System.out.println("Starting client");
-		System.out.println(pizzaList);
-		
-		for (String order : pizzaList) {
-			System.out.println(order);
-		}
+	/* Marks the order as finished.
+	 * Now it only deletes it from the table, but
+	 * in the future it should be added to an archive
+	 * of completed orders
+	 */
+	public static void finalizeOrder(Order order) {
+		orderList.remove(order);
 	}
 	
 	
