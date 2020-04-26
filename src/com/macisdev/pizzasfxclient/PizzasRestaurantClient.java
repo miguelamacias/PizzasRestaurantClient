@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class PizzasRestaurantClient extends Application {
@@ -15,14 +16,20 @@ public class PizzasRestaurantClient extends Application {
 		Scene scene = new Scene(root);
 		
 		stage.setScene(scene);
+		stage.setTitle("Gestión Pizzería Alpha");
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/pizza_icon.png")));
+		stage.setMaximized(true);
 		stage.show();
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
+	//Necessary to stop the background process at exit
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		System.exit(0);
+	}
 }

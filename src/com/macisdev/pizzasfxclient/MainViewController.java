@@ -41,7 +41,7 @@ public class MainViewController implements Initializable {
 		PizzaService_Service service = new PizzaService_Service();
 		PizzaService pizzaService = service.getPizzaServicePort();
 		
-		//Thread that runs in the backgorund updating the list of orders
+		//Thread that runs in the background updating the list of orders
 		new Thread(() -> {
 			//Arraylist to store the parsed orders
 			ArrayList<Order> ordersListFromWebService = new ArrayList<>();
@@ -116,7 +116,7 @@ public class MainViewController implements Initializable {
 				stage.initModality(Modality.NONE);
 				stage.initStyle(StageStyle.UTILITY);
 				
-				//Gets the controller asociated to the fxml to pass it the order selected
+				//Gets the controller associated to the fxml to pass it the order selected
 				OrderDetailsViewController newWindowController = fxmlLoader.getController();
 				Order order = orderTable.getSelectionModel().getSelectedItem();
 				newWindowController.setOrder(order);

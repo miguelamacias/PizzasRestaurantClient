@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.macisdev.pizzasfxclient.OrderDetailsViewController">
    <children>
       <TableView fx:id="elementsTable" layoutY="172.0" prefHeight="366.0" prefWidth="800.0">
-		  <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-	  </TableView>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
       <TextField fx:id="tfOrderId" editable="false" layoutX="149.0" layoutY="27.0" prefHeight="31.0" prefWidth="220.0" />
       <TextField fx:id="tfCustomerName" editable="false" layoutX="149.0" layoutY="76.0" prefHeight="31.0" prefWidth="220.0" />
       <TextField fx:id="tfCustomerPhone" editable="false" layoutX="149.0" layoutY="123.0" prefHeight="31.0" prefWidth="220.0" />
@@ -25,7 +24,7 @@
       <TextField fx:id="tfTotalPrice" editable="false" layoutX="549.0" layoutY="124.0" prefHeight="31.0" prefWidth="220.0" />
       <TextField fx:id="tfPaymentMethod" editable="false" layoutX="549.0" layoutY="77.0" prefHeight="31.0" prefWidth="220.0" />
       <TextField fx:id="tfCustomerAddress" editable="false" layoutX="549.0" layoutY="28.0" prefHeight="31.0" prefWidth="220.0" />
-      <Button layoutX="712.0" layoutY="549.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="22.0" layoutY="549.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="708.0" layoutY="549.0" mnemonicParsing="false" text="Cerrar" />
+      <Button layoutX="31.0" layoutY="549.0" mnemonicParsing="false" text="Finalizar pedido" />
    </children>
 </AnchorPane>
