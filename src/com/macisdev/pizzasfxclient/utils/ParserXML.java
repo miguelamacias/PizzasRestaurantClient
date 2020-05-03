@@ -23,7 +23,8 @@ public class ParserXML {
 		Order order = new Order();
 		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xml)));
 		document.getDocumentElement().normalize();
-		
+
+
 		//Get order header
 		NodeList orderInfo = document.getElementsByTagName("order_info");
 		
@@ -38,7 +39,8 @@ public class ParserXML {
 		order.setDeliveryMethod(elementOrderInfo.getElementsByTagName("delivery_method").item(0).getTextContent());
 		order.setCustomerAddress(elementOrderInfo.getElementsByTagName("customer_address").item(0).getTextContent());
 		order.setPaymentMethod(elementOrderInfo.getElementsByTagName("payment_method").item(0).getTextContent());
-		double totalPrice = Double.parseDouble(elementOrderInfo.getElementsByTagName("total_price").item(0).getTextContent());
+		double totalPrice = Double.parseDouble(elementOrderInfo.getElementsByTagName("total_price").
+				item(0).getTextContent());
 		order.setTotalPrice(totalPrice);
 		
 		//Parse order elements		
@@ -56,7 +58,9 @@ public class ParserXML {
 				orderElement.setName(currentElement.getElementsByTagName("name").item(0).getTextContent());
 				orderElement.setSize(currentElement.getElementsByTagName("size").item(0).getTextContent());
 				orderElement.setExtras(currentElement.getElementsByTagName("extras").item(0).getTextContent());
-				orderElement.setPrice(currentElement.getElementsByTagName("price").item(0).getTextContent());
+				double price = Double.parseDouble(currentElement.getElementsByTagName("price").
+						item(0).getTextContent());
+				orderElement.setPrice(price);
 				
 				//Adds the element parsed to the order
 				order.addElementToOrder(orderElement);

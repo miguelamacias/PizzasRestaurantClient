@@ -24,33 +24,17 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _SendOrder_QNAME = new QName("http://pizzawebservice.macisdev.com/", "sendOrder");
-    private final static QName _GetOrdersResponse_QNAME = new QName("http://pizzawebservice.macisdev.com/", "getOrdersResponse");
-    private final static QName _IOException_QNAME = new QName("http://pizzawebservice.macisdev.com/", "IOException");
-    private final static QName _GetOrders_QNAME = new QName("http://pizzawebservice.macisdev.com/", "getOrders");
-    private final static QName _SendOrderResponse_QNAME = new QName("http://pizzawebservice.macisdev.com/", "sendOrderResponse");
+    private final static QName _IOException_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "IOException");
+    private final static QName _GetOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrders");
+    private final static QName _GetOrdersResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrdersResponse");
+    private final static QName _SendOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrder");
+    private final static QName _SendOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrderResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.macisdev.pizzasfxclient.webservicereference
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link GetOrdersResponse }
-     * 
-     */
-    public GetOrdersResponse createGetOrdersResponse() {
-        return new GetOrdersResponse();
-    }
-
-    /**
-     * Create an instance of {@link SendOrder }
-     * 
-     */
-    public SendOrder createSendOrder() {
-        return new SendOrder();
     }
 
     /**
@@ -70,6 +54,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetOrdersResponse }
+     * 
+     */
+    public GetOrdersResponse createGetOrdersResponse() {
+        return new GetOrdersResponse();
+    }
+
+    /**
+     * Create an instance of {@link SendOrder }
+     * 
+     */
+    public SendOrder createSendOrder() {
+        return new SendOrder();
+    }
+
+    /**
      * Create an instance of {@link SendOrderResponse }
      * 
      */
@@ -78,46 +78,66 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendOrder }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
      */
-    @XmlElementDecl(namespace = "http://pizzawebservice.macisdev.com/", name = "sendOrder")
-    public JAXBElement<SendOrder> createSendOrder(SendOrder value) {
-        return new JAXBElement<SendOrder>(_SendOrder_QNAME, SendOrder.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetOrdersResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://pizzawebservice.macisdev.com/", name = "getOrdersResponse")
-    public JAXBElement<GetOrdersResponse> createGetOrdersResponse(GetOrdersResponse value) {
-        return new JAXBElement<GetOrdersResponse>(_GetOrdersResponse_QNAME, GetOrdersResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://pizzawebservice.macisdev.com/", name = "IOException")
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "IOException")
     public JAXBElement<IOException> createIOException(IOException value) {
         return new JAXBElement<IOException>(_IOException_QNAME, IOException.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetOrders }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetOrders }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetOrders }{@code >}
      */
-    @XmlElementDecl(namespace = "http://pizzawebservice.macisdev.com/", name = "getOrders")
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getOrders")
     public JAXBElement<GetOrders> createGetOrders(GetOrders value) {
         return new JAXBElement<GetOrders>(_GetOrders_QNAME, GetOrders.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendOrderResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetOrdersResponse }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetOrdersResponse }{@code >}
      */
-    @XmlElementDecl(namespace = "http://pizzawebservice.macisdev.com/", name = "sendOrderResponse")
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getOrdersResponse")
+    public JAXBElement<GetOrdersResponse> createGetOrdersResponse(GetOrdersResponse value) {
+        return new JAXBElement<GetOrdersResponse>(_GetOrdersResponse_QNAME, GetOrdersResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendOrder }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link SendOrder }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "sendOrder")
+    public JAXBElement<SendOrder> createSendOrder(SendOrder value) {
+        return new JAXBElement<SendOrder>(_SendOrder_QNAME, SendOrder.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendOrderResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link SendOrderResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "sendOrderResponse")
     public JAXBElement<SendOrderResponse> createSendOrderResponse(SendOrderResponse value) {
         return new JAXBElement<SendOrderResponse>(_SendOrderResponse_QNAME, SendOrderResponse.class, null, value);
     }

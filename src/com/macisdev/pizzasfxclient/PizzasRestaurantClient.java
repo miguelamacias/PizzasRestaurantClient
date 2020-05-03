@@ -8,7 +8,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class PizzasRestaurantClient extends Application {
-	
+	private static Stage primaryStage;
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
@@ -20,6 +21,7 @@ public class PizzasRestaurantClient extends Application {
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/pizza_icon.png")));
 		stage.setMaximized(true);
 		stage.show();
+		primaryStage = stage;
 	}
 
 	public static void main(String[] args) {
@@ -31,5 +33,10 @@ public class PizzasRestaurantClient extends Application {
 	public void stop() throws Exception {
 		super.stop();
 		System.exit(0);
+	}
+
+	//Returns the primaryStage to be used all across the app
+	public static Stage getPrimaryStage() {
+		return primaryStage;
 	}
 }

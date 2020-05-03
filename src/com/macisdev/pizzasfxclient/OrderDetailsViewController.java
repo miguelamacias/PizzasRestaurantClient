@@ -104,20 +104,8 @@ public class OrderDetailsViewController implements Initializable {
 	//Sets the order as finalized in the main controller
 	@FXML
 	private void btnOrderFinalized(ActionEvent event) {
-		//Creates an alert dialog and configures it
-		Alert confirmationDialog = new Alert(AlertType.CONFIRMATION);
-		confirmationDialog.setTitle("Finalizar Pedido");
-		confirmationDialog.setHeaderText("Finalizar pedido");
-		confirmationDialog.setContentText("¿Desea finalizar este pedido? Esto lo" +
-				" borrará de la lista de pedidos pendientes.");
-		confirmationDialog.initOwner(((Node) event.getSource()).getScene().getWindow());
-
-		//Shows the dialog and get the user input
-		Optional userAnswer = confirmationDialog.showAndWait();
-
-		//If user confirmed the dialog the operation is done
-		if (userAnswer.get() == ButtonType.OK) {
-			MainViewController.finalizeOrder(order);
+		boolean finalized = MainViewController.showFinalizeConfirmDialog(event, order);
+		if (finalized) {
 			btnCloseWindow(event);
 		}
 	}

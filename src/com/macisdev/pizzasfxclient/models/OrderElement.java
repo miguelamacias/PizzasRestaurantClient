@@ -1,5 +1,6 @@
 package com.macisdev.pizzasfxclient.models;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class OrderElement {
@@ -7,14 +8,14 @@ public class OrderElement {
     private SimpleStringProperty name;
     private SimpleStringProperty size;
     private SimpleStringProperty extras;
-    private SimpleStringProperty price;
+    private SimpleDoubleProperty price;
 
-	public OrderElement(String code, String name, String size, String extras, String price) {
+	public OrderElement(String code, String name, String size, String extras, double price) {
 		this.code = new SimpleStringProperty(code);
 		this.name = new SimpleStringProperty(name);
 		this.size = new SimpleStringProperty(size);
 		this.extras = new SimpleStringProperty(extras);
-		this.price = new SimpleStringProperty(price);
+		this.price = new SimpleDoubleProperty(price);
 	}
 	
 	public OrderElement() {
@@ -37,8 +38,8 @@ public class OrderElement {
 		this.extras = new SimpleStringProperty(extras);
 	}
 
-	public void setPrice(String price) {
-		this.price = new SimpleStringProperty(price);
+	public void setPrice(double price) {
+		this.price = new SimpleDoubleProperty(price);
 	}
 	
 	
@@ -60,8 +61,12 @@ public class OrderElement {
 	}
 
 	public String getPrice() {
+		return String.format("%.2f€", price.get());
+	}
+
+	public double getPriceRaw() {
 		return price.get();
-	}	
+	}
 	
     @Override
     public String toString() {
