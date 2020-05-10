@@ -39,8 +39,13 @@ public class MainViewController implements Initializable {
 	@FXML
 	private TableView<Order> orderTable;
 
+	@FXML
+	private TextField tfWaitingTime;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		//sets the default waiting time
+		tfWaitingTime.setText("30");
 		//WebService objects
 		PizzaShopWebService service = new PizzaShopWebService();
 		PizzaShopService pizzaService = service.getPizzaShopServicePort();
@@ -59,7 +64,8 @@ public class MainViewController implements Initializable {
 			try {
 				while (true) {//It runs forever with a delay of 5 seconds between cycles				
 					//Gets the orders from the web service and parses them
-					for (String order : pizzaService.getOrders()) {
+					for (String order : pizzaService.getOrders(
+							Integer.parseInt(tfWaitingTime.getText()))) { //arg0: time expected for the order to be ready
 						ordersListFromWebService.add(ParserXML.parseXmlToOrder(order));
 					}
 					//Add the parsed orders to the observableList used to store the table data

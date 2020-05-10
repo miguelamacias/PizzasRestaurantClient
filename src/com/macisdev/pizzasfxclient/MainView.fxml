@@ -28,13 +28,15 @@
                      </Menu>
                  </menus>
               </MenuBar>
-              <HBox prefHeight="51.0" prefWidth="1219.0">
+              <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="1219.0" spacing="40.0">
                <children>
                   <Label text="Gestión Pizzería">
                      <font>
                         <Font name="Verdana Bold" size="37.0" />
                      </font>
                   </Label>
+                  <Label text="Tiempo de espera:" />
+                  <TextField fx:id="tfWaitingTime" prefHeight="31.0" prefWidth="65.0" />
                </children>
               </HBox>
               <TableView fx:id="orderTable" onMouseClicked="#openOrderDetailsWindow" prefHeight="548.0" prefWidth="1219.0" VBox.vgrow="ALWAYS">

@@ -48,6 +48,7 @@ public interface PizzaShopService {
 
     /**
      * 
+     * @param arg0
      * @return
      *     returns java.util.List<java.lang.String>
      */
@@ -56,6 +57,8 @@ public interface PizzaShopService {
     @RequestWrapper(localName = "getOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrders")
     @ResponseWrapper(localName = "getOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrdersResponse")
     @Action(input = "http://pizzashopwebservice.macisdev.com/PizzaShopService/getOrdersRequest", output = "http://pizzashopwebservice.macisdev.com/PizzaShopService/getOrdersResponse")
-    public List<String> getOrders();
+    public List<String> getOrders(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
 
 }
