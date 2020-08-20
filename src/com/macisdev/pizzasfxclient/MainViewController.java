@@ -1,21 +1,24 @@
 
 package com.macisdev.pizzasfxclient;
 
-import com.macisdev.pizzasfxclient.models.Order;
+import com.macisdev.pizzasfxclient.utils.OrderConverter;
 import com.macisdev.pizzasfxclient.utils.ParserXML;
 
 import java.io.IOException;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.macisdev.orders.Order;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopService;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopWebService;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -35,7 +39,9 @@ import javafx.util.Callback;
 @SuppressWarnings("BusyWait")
 public class MainViewController implements Initializable {
 	private static final ObservableList<Order> orderList = FXCollections.observableArrayList();
-	
+
+	private PizzaShopService pizzaService;
+
 	@FXML
 	private TableView<Order> orderTable;
 
@@ -48,7 +54,7 @@ public class MainViewController implements Initializable {
 		tfWaitingTime.setText("30");
 		//WebService objects
 		PizzaShopWebService service = new PizzaShopWebService();
-		PizzaShopService pizzaService = service.getPizzaShopServicePort();
+		pizzaService = service.getPizzaShopServicePort();
 		
 		//Thread that runs in the background updating the list of orders
 		new Thread(() -> {
@@ -105,6 +111,21 @@ public class MainViewController implements Initializable {
 		
 		TableColumn totalPriceColumn = new TableColumn("Importe");
 		totalPriceColumn.setCellValueFactory(new PropertyValueFactory("totalPrice"));
+		//Formats the price properly
+		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+		totalPriceColumn.setCellFactory(tc -> new TableCell<Order, Double>() {
+
+			@Override
+			protected void updateItem(Double price, boolean empty) {
+				super.updateItem(price, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					setText(currencyFormat.format(price));
+				}
+			}
+		});
+
 
 		//Adds the created columns to the table
 		orderTable.getColumns().addAll(orderIdColumn, orderDateTimeColumn, customerNameColumn, customerPhoneColumn,
@@ -136,7 +157,7 @@ public class MainViewController implements Initializable {
 					}
 				}
 		);
-	}	
+	}
 	
 	//Opens a window that shows the details of the selected order when
 	//double click is done in a row of the table
@@ -174,6 +195,37 @@ public class MainViewController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	//Opens a dialog to search an order in the database using its ID
+	@FXML
+	void searchOrderById(ActionEvent event) {
+		String orderId = "";
+		//Shows an input dialog for the user to inter the desired order
+		TextInputDialog inputDialogOrderId = new TextInputDialog("1597938444192");
+		inputDialogOrderId.setTitle("Consultar Pedido");
+		inputDialogOrderId.setHeaderText("Consultar pedido por código");
+		inputDialogOrderId.setContentText("Introduzca el código del pedido a consultar:");
+		Optional<String> answer = inputDialogOrderId.showAndWait();
+		orderId = answer.get();
+		if (orderId == "") {
+			inputDialogOrderId.close();
+		}
+
+		//retrieves the order form the server and converts it to an order of the local type
+		Order retrievedOrder = OrderConverter.convertOrder(pizzaService.getStoredOrder(orderId));
+
+		//checks if the order have been retrieved
+		if (retrievedOrder != null) {
+			openOrderDetailsWindow(retrievedOrder);
+		} else {
+			Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
+			dialogOrderNotFound.setTitle("Pedido no encontrado");
+			dialogOrderNotFound.setHeaderText("No se ha encontrado el pedido con el código introducido.");
+			dialogOrderNotFound.setContentText("Compruebe que ha introducido el código correctamente.");
+			dialogOrderNotFound.showAndWait();
+		}
+
 	}
 
 	public static boolean showFinalizeConfirmDialog(Event event, Order order){

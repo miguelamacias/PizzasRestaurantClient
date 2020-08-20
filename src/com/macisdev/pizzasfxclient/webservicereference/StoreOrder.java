@@ -3,21 +3,20 @@ package com.macisdev.pizzasfxclient.webservicereference;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para sendOrderResponse complex type.
+ * <p>Clase Java para storeOrder complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="sendOrderResponse"&gt;
+ * &lt;complexType name="storeOrder"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -27,28 +26,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sendOrderResponse", propOrder = {
-    "_return"
+@XmlType(name = "storeOrder", propOrder = {
+    "arg0"
 })
-public class SendOrderResponse {
+public class StoreOrder {
 
-    @XmlElement(name = "return")
-    protected int _return;
+    protected String arg0;
 
     /**
-     * Obtiene el valor de la propiedad return.
+     * Obtiene el valor de la propiedad arg0.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getReturn() {
-        return _return;
+    public String getArg0() {
+        return arg0;
     }
 
     /**
-     * Define el valor de la propiedad return.
+     * Define el valor de la propiedad arg0.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setReturn(int value) {
-        this._return = value;
+    public void setArg0(String value) {
+        this.arg0 = value;
     }
 
 }

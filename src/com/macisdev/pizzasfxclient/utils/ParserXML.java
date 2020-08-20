@@ -5,12 +5,12 @@
  */
 package com.macisdev.pizzasfxclient.utils;
 
-import com.macisdev.pizzasfxclient.models.Order;
-import com.macisdev.pizzasfxclient.models.OrderElement;
+
 import java.io.StringReader;
 import java.time.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import com.macisdev.orders.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

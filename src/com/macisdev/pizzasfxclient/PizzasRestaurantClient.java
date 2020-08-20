@@ -7,12 +7,19 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class PizzasRestaurantClient extends Application {
 	private static Stage primaryStage;
 
 	@Override
-	public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+	public void start(Stage stage) {
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		Scene scene = new Scene(root);
 		

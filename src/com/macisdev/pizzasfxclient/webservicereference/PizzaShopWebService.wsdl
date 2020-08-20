@@ -19,6 +19,18 @@
 <message name="getOrdersResponse">
 <part name="parameters" element="tns:getOrdersResponse"/>
 </message>
+<message name="storeOrder">
+<part name="parameters" element="tns:storeOrder"/>
+</message>
+<message name="storeOrderResponse">
+<part name="parameters" element="tns:storeOrderResponse"/>
+</message>
+<message name="getStoredOrder">
+<part name="parameters" element="tns:getStoredOrder"/>
+</message>
+<message name="getStoredOrderResponse">
+<part name="parameters" element="tns:getStoredOrderResponse"/>
+</message>
 <portType name="PizzaShopService">
 <operation name="sendOrder">
 <input wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/sendOrderRequest" message="tns:sendOrder"/>
@@ -28,6 +40,14 @@
 <operation name="getOrders">
 <input wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/getOrdersRequest" message="tns:getOrders"/>
 <output wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/getOrdersResponse" message="tns:getOrdersResponse"/>
+</operation>
+<operation name="storeOrder">
+<input wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/storeOrderRequest" message="tns:storeOrder"/>
+<output wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/storeOrderResponse" message="tns:storeOrderResponse"/>
+</operation>
+<operation name="getStoredOrder">
+<input wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/getStoredOrderRequest" message="tns:getStoredOrder"/>
+<output wsam:Action="http://pizzashopwebservice.macisdev.com/PizzaShopService/getStoredOrderResponse" message="tns:getStoredOrderResponse"/>
 </operation>
 </portType>
 <binding name="PizzaShopServicePortBinding" type="tns:PizzaShopService">
@@ -45,6 +65,24 @@
 </fault>
 </operation>
 <operation name="getOrders">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="storeOrder">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getStoredOrder">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

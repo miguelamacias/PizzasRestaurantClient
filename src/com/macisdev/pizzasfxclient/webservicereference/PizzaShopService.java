@@ -7,8 +7,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.ws.Action;
-import javax.xml.ws.FaultAction;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -30,21 +28,32 @@ public interface PizzaShopService {
      * 
      * @param arg0
      * @return
-     *     returns boolean
+     *     returns int
      * @throws IOException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "sendOrder", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.SendOrder")
     @ResponseWrapper(localName = "sendOrderResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.SendOrderResponse")
-    @Action(input = "http://pizzashopwebservice.macisdev.com/PizzaShopService/sendOrderRequest", output = "http://pizzashopwebservice.macisdev.com/PizzaShopService/sendOrderResponse", fault = {
-        @FaultAction(className = IOException_Exception.class, value = "http://pizzashopwebservice.macisdev.com/PizzaShopService/sendOrder/Fault/IOException")
-    })
-    public boolean sendOrder(
+    public int sendOrder(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0)
         throws IOException_Exception
     ;
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns com.macisdev.pizzasfxclient.webservicereference.Order
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getStoredOrder", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrder")
+    @ResponseWrapper(localName = "getStoredOrderResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrderResponse")
+    public Order getStoredOrder(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
 
     /**
      * 
@@ -56,7 +65,6 @@ public interface PizzaShopService {
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrders")
     @ResponseWrapper(localName = "getOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrdersResponse")
-    @Action(input = "http://pizzashopwebservice.macisdev.com/PizzaShopService/getOrdersRequest", output = "http://pizzashopwebservice.macisdev.com/PizzaShopService/getOrdersResponse")
     public List<String> getOrders(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0);

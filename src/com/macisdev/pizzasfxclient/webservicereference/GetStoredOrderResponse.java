@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para sendOrderResponse complex type.
+ * <p>Clase Java para getStoredOrderResponse complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="sendOrderResponse"&gt;
+ * &lt;complexType name="getStoredOrderResponse"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="return" type="{http://pizzashopwebservice.macisdev.com/}order" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -27,27 +27,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sendOrderResponse", propOrder = {
+@XmlType(name = "getStoredOrderResponse", propOrder = {
     "_return"
 })
-public class SendOrderResponse {
+public class GetStoredOrderResponse {
 
     @XmlElement(name = "return")
-    protected int _return;
+    protected Order _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
+     * @return
+     *     possible object is
+     *     {@link Order }
+     *     
      */
-    public int getReturn() {
+    public Order getReturn() {
         return _return;
     }
 
     /**
      * Define el valor de la propiedad return.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Order }
+     *     
      */
-    public void setReturn(int value) {
+    public void setReturn(Order value) {
         this._return = value;
     }
 

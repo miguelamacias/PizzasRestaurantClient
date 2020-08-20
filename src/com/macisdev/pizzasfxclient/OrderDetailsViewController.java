@@ -5,9 +5,9 @@
  */
 package com.macisdev.pizzasfxclient;
 
-import com.macisdev.pizzasfxclient.models.Order;
-import com.macisdev.pizzasfxclient.models.OrderElement;
+import com.macisdev.orders.*;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -71,6 +71,20 @@ public class OrderDetailsViewController implements Initializable {
 		
 		TableColumn priceColumn = new TableColumn("Precio");
 		priceColumn.setCellValueFactory(new PropertyValueFactory("price"));
+		//Formats the price properly
+		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+		priceColumn.setCellFactory(tc -> new TableCell<Order, Double>() {
+
+			@Override
+			protected void updateItem(Double price, boolean empty) {
+				super.updateItem(price, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					setText(currencyFormat.format(price));
+				}
+			}
+		});
 
 		//Adds the columns created to the table
 		elementsTable.getColumns().addAll(codeColumn, nameColumn, sizeColumn, extrasColumn, priceColumn);
@@ -92,7 +106,7 @@ public class OrderDetailsViewController implements Initializable {
 		tfCustomerPhone.setText(order.getCustomerPhone());
 		tfCustomerAddress.setText(order.getCustomerAddress());
 		tfPaymentMethod.setText(order.getPaymentMethod());
-		tfTotalPrice.setText(order.getTotalPrice());
+		tfTotalPrice.setText(String.format("%.2f €", order.getTotalPrice()));
 		tfDate.setText(order.getOrderDateTime().substring(0, 10));
 		tfTime.setText(order.getOrderDateTime().substring(13, 21));
 		

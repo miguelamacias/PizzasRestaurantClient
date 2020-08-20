@@ -18,7 +18,7 @@
                      </Menu>
                      <Menu mnemonicParsing="false" text="Pedidos">
                         <items>
-                            <MenuItem mnemonicParsing="false" text="Ver historial de pedidos" />
+                            <MenuItem mnemonicParsing="false" onAction="#searchOrderById" text="Consultar pedido por ID" />
                         </items>
                      </Menu>
                      <Menu mnemonicParsing="false" text="Ayuda">

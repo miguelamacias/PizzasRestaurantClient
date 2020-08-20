@@ -24,25 +24,19 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _IOException_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "IOException");
     private final static QName _GetOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrders");
     private final static QName _GetOrdersResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrdersResponse");
+    private final static QName _GetStoredOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrder");
+    private final static QName _GetStoredOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrderResponse");
     private final static QName _SendOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrder");
     private final static QName _SendOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrderResponse");
+    private final static QName _IOException_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "IOException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.macisdev.pizzasfxclient.webservicereference
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link IOException }
-     * 
-     */
-    public IOException createIOException() {
-        return new IOException();
     }
 
     /**
@@ -62,6 +56,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetStoredOrder }
+     * 
+     */
+    public GetStoredOrder createGetStoredOrder() {
+        return new GetStoredOrder();
+    }
+
+    /**
+     * Create an instance of {@link GetStoredOrderResponse }
+     * 
+     */
+    public GetStoredOrderResponse createGetStoredOrderResponse() {
+        return new GetStoredOrderResponse();
+    }
+
+    /**
      * Create an instance of {@link SendOrder }
      * 
      */
@@ -78,16 +88,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
+     * Create an instance of {@link IOException }
      * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
      */
-    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "IOException")
-    public JAXBElement<IOException> createIOException(IOException value) {
-        return new JAXBElement<IOException>(_IOException_QNAME, IOException.class, null, value);
+    public IOException createIOException() {
+        return new IOException();
+    }
+
+    /**
+     * Create an instance of {@link Order }
+     * 
+     */
+    public Order createOrder() {
+        return new Order();
+    }
+
+    /**
+     * Create an instance of {@link OrderElement }
+     * 
+     */
+    public OrderElement createOrderElement() {
+        return new OrderElement();
     }
 
     /**
@@ -117,6 +138,32 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetStoredOrder }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetStoredOrder }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getStoredOrder")
+    public JAXBElement<GetStoredOrder> createGetStoredOrder(GetStoredOrder value) {
+        return new JAXBElement<GetStoredOrder>(_GetStoredOrder_QNAME, GetStoredOrder.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetStoredOrderResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetStoredOrderResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getStoredOrderResponse")
+    public JAXBElement<GetStoredOrderResponse> createGetStoredOrderResponse(GetStoredOrderResponse value) {
+        return new JAXBElement<GetStoredOrderResponse>(_GetStoredOrderResponse_QNAME, GetStoredOrderResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SendOrder }{@code >}
      * 
      * @param value
@@ -140,6 +187,19 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "sendOrderResponse")
     public JAXBElement<SendOrderResponse> createSendOrderResponse(SendOrderResponse value) {
         return new JAXBElement<SendOrderResponse>(_SendOrderResponse_QNAME, SendOrderResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "IOException")
+    public JAXBElement<IOException> createIOException(IOException value) {
+        return new JAXBElement<IOException>(_IOException_QNAME, IOException.class, null, value);
     }
 
 }
