@@ -48,4 +48,12 @@ public class OrderConverter {
 
 		return convertedElement;
 	}
+
+	public static List<Order> convertOrderList(List<com.macisdev.pizzasfxclient.webservicereference.Order> orderList) {
+		List<Order> ordersConverted = new ArrayList<>();
+		for (com.macisdev.pizzasfxclient.webservicereference.Order order : orderList) {
+			ordersConverted.add(convertOrder(order));
+		}
+		return ordersConverted;
+	}
 }

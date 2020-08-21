@@ -19,6 +19,8 @@
                      <Menu mnemonicParsing="false" text="Pedidos">
                         <items>
                             <MenuItem mnemonicParsing="false" onAction="#searchOrderById" text="Consultar pedido por ID" />
+                        <MenuItem mnemonicParsing="false" onAction="#searchOrdersByPhoneNumber" text="Consultar pedidos por número de teléfono" />
+                        <MenuItem mnemonicParsing="false" onAction="#searchAllFiledOrders" text="Consultar todos los pedidos archivados" />
                         </items>
                      </Menu>
                      <Menu mnemonicParsing="false" text="Ayuda">

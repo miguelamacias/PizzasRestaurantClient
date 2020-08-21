@@ -43,6 +43,17 @@ public interface PizzaShopService {
 
     /**
      * 
+     * @return
+     *     returns java.util.List<com.macisdev.pizzasfxclient.webservicereference.Order>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAllStoredOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetAllStoredOrders")
+    @ResponseWrapper(localName = "getAllStoredOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetAllStoredOrdersResponse")
+    public List<Order> getAllStoredOrders();
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns com.macisdev.pizzasfxclient.webservicereference.Order
@@ -52,6 +63,20 @@ public interface PizzaShopService {
     @RequestWrapper(localName = "getStoredOrder", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrder")
     @ResponseWrapper(localName = "getStoredOrderResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrderResponse")
     public Order getStoredOrder(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<com.macisdev.pizzasfxclient.webservicereference.Order>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getStoredOrdersByPhoneNumber", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrdersByPhoneNumber")
+    @ResponseWrapper(localName = "getStoredOrdersByPhoneNumberResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrdersByPhoneNumberResponse")
+    public List<Order> getStoredOrdersByPhoneNumber(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 

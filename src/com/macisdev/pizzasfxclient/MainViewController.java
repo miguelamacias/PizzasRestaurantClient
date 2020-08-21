@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -145,7 +146,7 @@ public class MainViewController implements Initializable {
 
 						//Configures the menu
 						MenuItem viewOrder = new MenuItem("Abrir pedido");
-						viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem()));
+						viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem(),true));
 						MenuItem finalizeOrder = new MenuItem("Finalizar pedido");
 						finalizeOrder.setOnAction(event -> showFinalizeConfirmDialog(null, row.getItem()));
 						rowMenu.getItems().addAll(viewOrder, finalizeOrder);
@@ -165,12 +166,12 @@ public class MainViewController implements Initializable {
     void openOrderDetailsWindow(MouseEvent event) {
 		if (event.getClickCount() == 2) {
 			Order order = orderTable.getSelectionModel().getSelectedItem();
-			openOrderDetailsWindow(order);
+			openOrderDetailsWindow(order, true);
 		}
     }
 
     //Opens a windows that shows the details of the selected orders
-    void openOrderDetailsWindow(Order order) {
+    void openOrderDetailsWindow(Order order, boolean currentOrder) {
 		try {
 			//Creates a new window and sets its fxml file
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OrderDetailsView.fxml"));
@@ -188,7 +189,34 @@ public class MainViewController implements Initializable {
 			//Gets the controller associated to the fxml to pass it the order selected
 			OrderDetailsViewController detailsWindowController = fxmlLoader.getController();
 			detailsWindowController.setOrder(order);
-			detailsWindowController.loadOrder();
+			detailsWindowController.loadOrder(currentOrder);
+
+			//Shows the new window
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//Opens a new window that shows the list of orders specified
+	void openFiledOrdersWindow(List<Order> filedOrdersList) {
+		try {
+			//Creates a new window and sets its fxml file
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FiledOrdersView.fxml"));
+			Parent root = fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+
+			//configures the new window
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/pizza_icon.png")));
+			stage.setResizable(false);
+			stage.setTitle("Listado de pedidos archivados");
+			stage.initModality(Modality.NONE);
+			stage.initStyle(StageStyle.DECORATED);
+
+			//Gets the controller associated to the fxml to pass it the list of orders to be shown
+			FiledOrdersViewController filedOrdersViewController = fxmlLoader.getController();
+			filedOrdersViewController.setFiledOrdersList(filedOrdersList);
 
 			//Shows the new window
 			stage.show();
@@ -207,25 +235,67 @@ public class MainViewController implements Initializable {
 		inputDialogOrderId.setHeaderText("Consultar pedido por código");
 		inputDialogOrderId.setContentText("Introduzca el código del pedido a consultar:");
 		Optional<String> answer = inputDialogOrderId.showAndWait();
-		orderId = answer.get();
-		if (orderId == "") {
-			inputDialogOrderId.close();
-		}
+		if (answer.isPresent()) {
+			orderId = answer.get();
 
-		//retrieves the order form the server and converts it to an order of the local type
-		Order retrievedOrder = OrderConverter.convertOrder(pizzaService.getStoredOrder(orderId));
+			//retrieves the order form the server and converts it to an order of the local type
+			Order retrievedOrder = OrderConverter.convertOrder(pizzaService.getStoredOrder(orderId));
+
+			//checks if the order have been retrieved
+			if (retrievedOrder != null) {
+				openOrderDetailsWindow(retrievedOrder, false);
+			} else {
+				Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
+				dialogOrderNotFound.setTitle("Pedido no encontrado");
+				dialogOrderNotFound.setHeaderText("No se ha encontrado el pedido con el código introducido.");
+				dialogOrderNotFound.setContentText("Compruebe que ha introducido el código correctamente.");
+				dialogOrderNotFound.showAndWait();
+			}
+		}
+	}
+
+	//Opens a dialog to search orders by the phone number associated to them
+	@FXML
+	void searchOrdersByPhoneNumber(ActionEvent event) {
+		String phone = "";
+		//Shows an input dialog for the user to inter the desired phone number
+		TextInputDialog inputDialogPhoneNumber = new TextInputDialog("649425570");
+		inputDialogPhoneNumber.setTitle("Consultar Pedidos");
+		inputDialogPhoneNumber.setHeaderText("Consultar pedido por número de teléfono");
+		inputDialogPhoneNumber.setContentText("Introduzca el número de teléfono a consultar:");
+		Optional<String> answer = inputDialogPhoneNumber.showAndWait();
+
+		//if the user press OK the execution continues
+		if (answer.isPresent()) {
+			phone = answer.get();
+
+			//retrieves the list of orders form the server and converts it to a list of the local type
+			List<Order> ordersRetrieved =
+					OrderConverter.convertOrderList(pizzaService.getStoredOrdersByPhoneNumber(phone));
+
+			//checks if the order have been retrieved
+			if (!ordersRetrieved.isEmpty()) {
+				openFiledOrdersWindow(ordersRetrieved);
+			} else {
+				Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
+				dialogOrderNotFound.setTitle("Teléfono no encontrado");
+				dialogOrderNotFound.setHeaderText("No se ha encontrado ningún pedido asociado a este teléfono");
+				dialogOrderNotFound.setContentText("Compruebe que ha introducido el teléfono correctamente.");
+				dialogOrderNotFound.showAndWait();
+			}
+		}
+	}
+
+	@FXML
+	void searchAllFiledOrders(ActionEvent event) {
+		//retrieves the list of orders form the server and converts it to a list of the local type
+		List<Order> ordersRetrieved =
+				OrderConverter.convertOrderList(pizzaService.getAllStoredOrders());
 
 		//checks if the order have been retrieved
-		if (retrievedOrder != null) {
-			openOrderDetailsWindow(retrievedOrder);
-		} else {
-			Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
-			dialogOrderNotFound.setTitle("Pedido no encontrado");
-			dialogOrderNotFound.setHeaderText("No se ha encontrado el pedido con el código introducido.");
-			dialogOrderNotFound.setContentText("Compruebe que ha introducido el código correctamente.");
-			dialogOrderNotFound.showAndWait();
+		if (!ordersRetrieved.isEmpty()) {
+			openFiledOrdersWindow(ordersRetrieved);
 		}
-
 	}
 
 	public static boolean showFinalizeConfirmDialog(Event event, Order order){

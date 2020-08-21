@@ -24,9 +24,13 @@ import javafx.stage.Stage;
 public class OrderDetailsViewController implements Initializable {
 	//The list of elements of the order
 	private final ObservableList<OrderElement> orderElementsList = FXCollections.observableArrayList();
+
 	//Contains the current order of this window
 	private Order order;
-	
+
+	@FXML
+	private Button btnFinishOrder;
+
 	@FXML
     private TextField tfCustomerAddress;
 
@@ -99,7 +103,7 @@ public class OrderDetailsViewController implements Initializable {
 	 * This can't be done in the initialize method because that
 	 * method is called	before the controller knows what order to load.
 	 */
-	public void loadOrder() {
+	public void loadOrder(boolean currentOrder) {
 		//Loads the info to the textfields
 		tfOrderId.setText(order.getOrderId());
 		tfCustomerName.setText(order.getCustomerName());
@@ -112,7 +116,11 @@ public class OrderDetailsViewController implements Initializable {
 		
 		//Loads the elements of the order in the table
 		orderElementsList.addAll(order.getOrderElements());
-		elementsTable.setItems(orderElementsList);		
+		elementsTable.setItems(orderElementsList);
+
+		//controls the visibility of the finish order button according to the kind of order
+		btnFinishOrder.setVisible(currentOrder);
+
 	}
 
 	//Sets the order as finalized in the main controller

@@ -24,10 +24,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GetAllStoredOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getAllStoredOrders");
+    private final static QName _GetAllStoredOrdersResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getAllStoredOrdersResponse");
     private final static QName _GetOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrders");
     private final static QName _GetOrdersResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrdersResponse");
     private final static QName _GetStoredOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrder");
     private final static QName _GetStoredOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrderResponse");
+    private final static QName _GetStoredOrdersByPhoneNumber_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrdersByPhoneNumber");
+    private final static QName _GetStoredOrdersByPhoneNumberResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrdersByPhoneNumberResponse");
     private final static QName _SendOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrder");
     private final static QName _SendOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrderResponse");
     private final static QName _IOException_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "IOException");
@@ -37,6 +41,22 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link GetAllStoredOrders }
+     * 
+     */
+    public GetAllStoredOrders createGetAllStoredOrders() {
+        return new GetAllStoredOrders();
+    }
+
+    /**
+     * Create an instance of {@link GetAllStoredOrdersResponse }
+     * 
+     */
+    public GetAllStoredOrdersResponse createGetAllStoredOrdersResponse() {
+        return new GetAllStoredOrdersResponse();
     }
 
     /**
@@ -69,6 +89,22 @@ public class ObjectFactory {
      */
     public GetStoredOrderResponse createGetStoredOrderResponse() {
         return new GetStoredOrderResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetStoredOrdersByPhoneNumber }
+     * 
+     */
+    public GetStoredOrdersByPhoneNumber createGetStoredOrdersByPhoneNumber() {
+        return new GetStoredOrdersByPhoneNumber();
+    }
+
+    /**
+     * Create an instance of {@link GetStoredOrdersByPhoneNumberResponse }
+     * 
+     */
+    public GetStoredOrdersByPhoneNumberResponse createGetStoredOrdersByPhoneNumberResponse() {
+        return new GetStoredOrdersByPhoneNumberResponse();
     }
 
     /**
@@ -109,6 +145,32 @@ public class ObjectFactory {
      */
     public OrderElement createOrderElement() {
         return new OrderElement();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllStoredOrders }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetAllStoredOrders }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getAllStoredOrders")
+    public JAXBElement<GetAllStoredOrders> createGetAllStoredOrders(GetAllStoredOrders value) {
+        return new JAXBElement<GetAllStoredOrders>(_GetAllStoredOrders_QNAME, GetAllStoredOrders.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllStoredOrdersResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetAllStoredOrdersResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getAllStoredOrdersResponse")
+    public JAXBElement<GetAllStoredOrdersResponse> createGetAllStoredOrdersResponse(GetAllStoredOrdersResponse value) {
+        return new JAXBElement<GetAllStoredOrdersResponse>(_GetAllStoredOrdersResponse_QNAME, GetAllStoredOrdersResponse.class, null, value);
     }
 
     /**
@@ -161,6 +223,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getStoredOrderResponse")
     public JAXBElement<GetStoredOrderResponse> createGetStoredOrderResponse(GetStoredOrderResponse value) {
         return new JAXBElement<GetStoredOrderResponse>(_GetStoredOrderResponse_QNAME, GetStoredOrderResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetStoredOrdersByPhoneNumber }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetStoredOrdersByPhoneNumber }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getStoredOrdersByPhoneNumber")
+    public JAXBElement<GetStoredOrdersByPhoneNumber> createGetStoredOrdersByPhoneNumber(GetStoredOrdersByPhoneNumber value) {
+        return new JAXBElement<GetStoredOrdersByPhoneNumber>(_GetStoredOrdersByPhoneNumber_QNAME, GetStoredOrdersByPhoneNumber.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetStoredOrdersByPhoneNumberResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetStoredOrdersByPhoneNumberResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getStoredOrdersByPhoneNumberResponse")
+    public JAXBElement<GetStoredOrdersByPhoneNumberResponse> createGetStoredOrdersByPhoneNumberResponse(GetStoredOrdersByPhoneNumberResponse value) {
+        return new JAXBElement<GetStoredOrdersByPhoneNumberResponse>(_GetStoredOrdersByPhoneNumberResponse_QNAME, GetStoredOrdersByPhoneNumberResponse.class, null, value);
     }
 
     /**
