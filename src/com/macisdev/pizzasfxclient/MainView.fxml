@@ -38,7 +38,8 @@
                      </font>
                   </Label>
                   <Label text="Tiempo de espera:" />
-                  <TextField fx:id="tfWaitingTime" prefHeight="31.0" prefWidth="65.0" />
+                  <TextField fx:id="tfWaitingTime" onAction="#changeWaitingTime" prefHeight="31.0" prefWidth="65.0" />
+                  <Button mnemonicParsing="false" onAction="#changeWaitingTime" text="Cambiar tiempo espera" />
                </children>
               </HBox>
               <TableView fx:id="orderTable" onMouseClicked="#openOrderDetailsWindow" prefHeight="548.0" prefWidth="1219.0" VBox.vgrow="ALWAYS">

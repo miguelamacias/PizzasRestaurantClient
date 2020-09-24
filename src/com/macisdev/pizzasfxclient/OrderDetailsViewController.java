@@ -10,6 +10,8 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class OrderDetailsViewController implements Initializable {
@@ -61,20 +64,47 @@ public class OrderDetailsViewController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {		
 		//Creates the columns of the table
-		TableColumn codeColumn = new TableColumn("Cod. producto");
+		TableColumn codeColumn = new TableColumn("Cod.");
 		codeColumn.setCellValueFactory(new PropertyValueFactory("code"));
+		codeColumn.setPrefWidth(63);
 		
 		TableColumn nameColumn = new TableColumn("Nombre");
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setPrefWidth(105);
 		
 		TableColumn sizeColumn = new TableColumn("Tamaño");
 		sizeColumn.setCellValueFactory(new PropertyValueFactory("size"));
+		sizeColumn.setPrefWidth(105);
 		
 		TableColumn extrasColumn = new TableColumn("Extras");
 		extrasColumn.setCellValueFactory(new PropertyValueFactory("extras"));
+		extrasColumn.setPrefWidth(442);
+
+		//Shows a tooltip if the text is longer than the cell
+		extrasColumn.setCellFactory(col -> new TableCell<Object, String>()
+		{
+			@Override
+			protected void updateItem(final String item, final boolean empty)
+			{
+				super.updateItem(item, empty);
+				setText(item);
+				TableColumn tableCol = (TableColumn) col;
+
+				if (item != null && tableCol.getWidth() < new Text(item + "  ").getLayoutBounds().getWidth())
+				{
+					tooltipProperty().bind(Bindings.when(Bindings.or(emptyProperty(), itemProperty().isNull())).then((Tooltip) null).otherwise(new Tooltip(item)));
+				} else
+				{
+					tooltipProperty().bind(Bindings.when(Bindings.or(emptyProperty(), itemProperty().isNull())).then((Tooltip) null).otherwise((Tooltip) null));
+				}
+
+			}
+		});
 		
 		TableColumn priceColumn = new TableColumn("Precio");
 		priceColumn.setCellValueFactory(new PropertyValueFactory("price"));
+		priceColumn.setPrefWidth(70);
+
 		//Formats the price properly
 		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 		priceColumn.setCellFactory(tc -> new TableCell<Order, Double>() {

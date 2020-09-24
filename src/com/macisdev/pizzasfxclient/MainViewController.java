@@ -48,6 +48,7 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	private TextField tfWaitingTime;
+	private int waitingTime = 30;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -63,7 +64,7 @@ public class MainViewController implements Initializable {
 			ArrayList<Order> ordersListFromWebService = new ArrayList<>();
 			//TODO: Delete this after testing.
 			try{
-				orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>"));
+				orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>"));
 			} catch(Exception e) {
 				e.printStackTrace();
 			}			
@@ -71,8 +72,7 @@ public class MainViewController implements Initializable {
 			try {
 				while (true) {//It runs forever with a delay of 5 seconds between cycles				
 					//Gets the orders from the web service and parses them
-					for (String order : pizzaService.getOrders(
-							Integer.parseInt(tfWaitingTime.getText()))) { //arg0: time expected for the order to be ready
+					for (String order : pizzaService.getOrders(waitingTime)) { //arg0: time expected for the order to be ready
 						ordersListFromWebService.add(ParserXML.parseXmlToOrder(order));
 					}
 					//Add the parsed orders to the observableList used to store the table data
@@ -322,11 +322,21 @@ public class MainViewController implements Initializable {
 		}
 		return false;
 	}
+
+	@FXML
+	void changeWaitingTime(ActionEvent event) {
+		try {
+			waitingTime = Integer.parseInt(tfWaitingTime.getText());
+		} catch (NumberFormatException e) {
+			Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
+			dialogOrderNotFound.setTitle("Tiempo inválido");
+			dialogOrderNotFound.setHeaderText("El valor introducido no es válido.");
+			dialogOrderNotFound.setContentText("Por favor, introduzca el tiempo de espera estimado en minutos.");
+			dialogOrderNotFound.showAndWait();
+		}
+	}
 	
-	/* Marks the order as finished.
-	 * Now it only deletes it from the table, but in the future
-	 * it should be added to an archive of completed orders
-	 */
+	//Marks the order as finished and deletes from the table
 	public static void finalizeOrder(Order order) {
 		orderList.remove(order);
 	}
