@@ -44,71 +44,7 @@ public class FiledOrdersViewController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		//Creates the columns of the table
-		TableColumn orderIdColumn = new TableColumn("Cod. pedido");
-		orderIdColumn.setCellValueFactory(new PropertyValueFactory("orderId"));
-
-		TableColumn orderDateTimeColumn = new TableColumn("Fecha - Hora");
-		orderDateTimeColumn.setCellValueFactory(new PropertyValueFactory("orderDateTime"));
-		
-		TableColumn customerNameColumn = new TableColumn("Nombre cliente");
-		customerNameColumn.setCellValueFactory(new PropertyValueFactory("customerName"));
-		
-		TableColumn customerPhoneColumn = new TableColumn("Teléfono");
-		customerPhoneColumn.setCellValueFactory(new PropertyValueFactory("customerPhone"));
-		
-		TableColumn customerAddressColumn = new TableColumn("Dirección");
-		customerAddressColumn.setCellValueFactory(new PropertyValueFactory("customerAddress"));
-		
-		TableColumn deliveryMethodColumn = new TableColumn("Tipo pedido");
-		deliveryMethodColumn.setCellValueFactory(new PropertyValueFactory("deliveryMethod"));
-		
-		TableColumn paymentMethodColumn = new TableColumn("Tipo pago");
-		paymentMethodColumn.setCellValueFactory(new PropertyValueFactory("paymentMethod"));
-		
-		TableColumn totalPriceColumn = new TableColumn("Importe");
-		totalPriceColumn.setCellValueFactory(new PropertyValueFactory("totalPrice"));
-		//Formats the price properly
-		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-		totalPriceColumn.setCellFactory(tc -> new TableCell<Order, Double>() {
-
-			@Override
-			protected void updateItem(Double price, boolean empty) {
-				super.updateItem(price, empty);
-				if (empty) {
-					setText(null);
-				} else {
-					setText(currencyFormat.format(price));
-				}
-			}
-		});
-
-
-		//Adds the created columns to the table
-		orderTable.getColumns().addAll(orderIdColumn, orderDateTimeColumn, customerNameColumn, customerPhoneColumn,
-				customerAddressColumn, deliveryMethodColumn, paymentMethodColumn, totalPriceColumn);
-
-		//Sets the datasource for the table
-		orderTable.setItems(filedOrdersList);
-
-		//Adds a contextual menu for the table
-		orderTable.setRowFactory(
-				tableView -> {
-					final TableRow<Order> row = new TableRow<>();
-					//Creates the menu
-					final ContextMenu rowMenu = new ContextMenu();
-
-					//Configures the menu
-					MenuItem viewOrder = new MenuItem("Abrir pedido");
-					viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem()));
-					rowMenu.getItems().addAll(viewOrder);
-
-					//Only shows the menu on non-null rows
-					row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty()))
-					.then(rowMenu).otherwise((ContextMenu) null));
-					return row;
-				}
-		);
+		MainViewController.configureTable(orderTable, filedOrdersList);
 	}
 
 	void setFiledOrdersList (List<Order> orders) {
