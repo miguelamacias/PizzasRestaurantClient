@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**Utility class that converts the class "Order" from the webService into the "Order" class from
- * the desktop app. They are the same class in code, but with a different namespace."
+ * the desktop app. They are the same class in code, but are in a different namespace."
  */
 public class OrderConverter {
 	public static Order convertOrder (com.macisdev.pizzasfxclient.webservicereference.Order order) {

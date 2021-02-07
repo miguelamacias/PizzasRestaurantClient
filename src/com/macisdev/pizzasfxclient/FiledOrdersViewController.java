@@ -48,6 +48,7 @@ public class FiledOrdersViewController implements Initializable {
 	}
 
 	void setFiledOrdersList (List<Order> orders) {
+		filedOrdersList.clear();
 		filedOrdersList.addAll(orders);
 	}
 
