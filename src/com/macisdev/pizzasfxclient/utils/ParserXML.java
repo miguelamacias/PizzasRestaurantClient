@@ -33,7 +33,9 @@ public class ParserXML {
 		Element elementOrderInfo = (Element) nodeOrderInfo;
 		String orderId = elementOrderInfo.getElementsByTagName("order_id").item(0).getTextContent();
 		order.setOrderId(orderId);
-		order.setOrderDateTime(parseDateTime(Long.parseLong(orderId)));
+		order.setOrderDateTime(
+				parseDateTime(Long.parseLong(
+						elementOrderInfo.getElementsByTagName("order_datetime").item(0).getTextContent())));
 		order.setCustomerName(elementOrderInfo.getElementsByTagName("customer_name").item(0).getTextContent());
 		order.setCustomerPhone(elementOrderInfo.getElementsByTagName("customer_phone").item(0).getTextContent());
 		order.setDeliveryMethod(elementOrderInfo.getElementsByTagName("delivery_method").item(0).getTextContent());
