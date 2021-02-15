@@ -28,18 +28,15 @@ public interface PizzaShopService {
      * 
      * @param arg0
      * @return
-     *     returns int
-     * @throws IOException_Exception
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "sendOrder", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.SendOrder")
     @ResponseWrapper(localName = "sendOrderResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.SendOrderResponse")
-    public int sendOrder(
+    public String sendOrder(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0)
-        throws IOException_Exception
-    ;
+        String arg0);
 
     /**
      * 

@@ -20,7 +20,8 @@ public class PizzasRestaurantClient extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
+		assert root != null;
 		Scene scene = new Scene(root);
 		
 		stage.setScene(scene);

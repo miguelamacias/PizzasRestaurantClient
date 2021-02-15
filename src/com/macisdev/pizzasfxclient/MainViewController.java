@@ -1,26 +1,15 @@
 
 package com.macisdev.pizzasfxclient;
 
+import com.macisdev.orders.Order;
 import com.macisdev.pizzasfxclient.utils.OrderConverter;
 import com.macisdev.pizzasfxclient.utils.ParserXML;
-
-import java.io.IOException;
-
-import java.net.URL;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
-import com.macisdev.orders.Order;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopService;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopWebService;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,14 +23,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 
-import javax.sql.DataSource;
 import javax.xml.ws.WebServiceException;
+import java.io.IOException;
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 @SuppressWarnings("BusyWait")
 public class MainViewController implements Initializable {
@@ -70,7 +63,7 @@ public class MainViewController implements Initializable {
 
 	public void getServerConnection() {
 		//WebService objects
-		PizzaShopWebService service = null;
+		PizzaShopWebService service;
 		try {
 			service = new PizzaShopWebService();
 			pizzaService = service.getPizzaShopServicePort();
@@ -85,12 +78,8 @@ public class MainViewController implements Initializable {
 			//Arraylist to store the parsed orders
 			ArrayList<Order> ordersListFromWebService = new ArrayList<>();
 			//TODO: Delete this after testing.
-			try{
-				//orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>"));
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-			//****************************
+			//orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>"));
+
 			try {
 				while (true) {//It runs forever with a delay of 5 seconds between cycles
 					//Gets the orders from the web service and parses them
@@ -107,37 +96,35 @@ public class MainViewController implements Initializable {
 			} catch (Exception e) {
 				System.err.println("Exception: The background thread has stopped unexpectedly");
 				//Inform the user that there is a problem with the connection
-				Platform.runLater(new Runnable() { //GUI cannot be updated from the bg thread
-					@Override
-					public void run() {
-						statusLabel.setText("⚠ Desconectado");
-						statusLabel.setTextFill(Color.RED);
 
-						//Creates an alert dialog and configures it
-						Alert reconnectionDialog = new Alert(AlertType.ERROR, "",
-								ButtonType.YES, ButtonType.NO);
-						reconnectionDialog.setTitle("Error de conexión");
-						reconnectionDialog.setHeaderText("Error en la conexión con el servidor");
-						reconnectionDialog.setContentText("¿Quiere reintentar la conexión?");
-						reconnectionDialog.initOwner(PizzasRestaurantClient.getPrimaryStage());
+				Platform.runLater(() -> { //GUI cannot be updated from the bg thread
+					statusLabel.setText("⚠ Desconectado");
+					statusLabel.setTextFill(Color.RED);
 
-						//Shows the dialog and get the user input
-						Optional userAnswer = reconnectionDialog.showAndWait();
+					//Creates an alert dialog and configures it
+					Alert reconnectionDialog = new Alert(AlertType.ERROR, "",
+							ButtonType.YES, ButtonType.NO);
+					reconnectionDialog.setTitle("Error de conexión");
+					reconnectionDialog.setHeaderText("Error en la conexión con el servidor");
+					reconnectionDialog.setContentText("¿Quiere reintentar la conexión?");
+					reconnectionDialog.initOwner(PizzasRestaurantClient.getPrimaryStage());
 
-						//If user confirmed the dialog the operation is done
-						if (userAnswer.get() == ButtonType.YES) {
-							startServerThread();
-						} else {
-							Alert offlineModeDialog = new Alert(AlertType.INFORMATION);
-							offlineModeDialog.setTitle("Error de conexión");
-							offlineModeDialog.setHeaderText("Trabajando en modo sin conexión");
-							offlineModeDialog.setContentText("Puede seguir trabajando los pedidos actuales pero " +
-									"no recibirá ningún nuevo pedido. Por favor intente restablecer la conexión.");
-							offlineModeDialog.initOwner(PizzasRestaurantClient.getPrimaryStage());
-							offlineModeDialog.showAndWait();
-						}
+					//Shows the dialog and get the user input
+					Optional userAnswer = reconnectionDialog.showAndWait();
 
+					//If user confirmed the dialog the operation is done
+					if (userAnswer.isPresent() && userAnswer.get() == ButtonType.YES) {
+						startServerThread();
+					} else {
+						Alert offlineModeDialog = new Alert(AlertType.INFORMATION);
+						offlineModeDialog.setTitle("Error de conexión");
+						offlineModeDialog.setHeaderText("Trabajando en modo sin conexión");
+						offlineModeDialog.setContentText("Puede seguir trabajando los pedidos actuales pero " +
+								"no recibirá ningún nuevo pedido. Por favor intente restablecer la conexión.");
+						offlineModeDialog.initOwner(PizzasRestaurantClient.getPrimaryStage());
+						offlineModeDialog.showAndWait();
 					}
+
 				});
 			}
 		}).start();
@@ -149,7 +136,7 @@ public class MainViewController implements Initializable {
 	}
 
 	@FXML
-	private void reconnectToServer(ActionEvent event) {
+	private void reconnectToServer() {
 		startServerThread();
 	}
 
@@ -202,25 +189,22 @@ public class MainViewController implements Initializable {
 
 		//Adds a contextual menu for the table
 		tableToConfigure.setRowFactory(
-				new Callback<TableView<Order>, TableRow<Order>>() {
-					@Override
-					public TableRow<Order> call(TableView<Order> tableView) {
-						final TableRow<Order> row = new TableRow<>();
-						//Creates the menu
-						final ContextMenu rowMenu = new ContextMenu();
+				tableView -> {
+					final TableRow<Order> row = new TableRow<>();
+					//Creates the menu
+					final ContextMenu rowMenu = new ContextMenu();
 
-						//Configures the menu
-						MenuItem viewOrder = new MenuItem("Abrir pedido");
-						viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem(),true));
-						MenuItem finalizeOrder = new MenuItem("Finalizar pedido");
-						finalizeOrder.setOnAction(event -> showFinalizeConfirmDialog(null, row.getItem()));
-						rowMenu.getItems().addAll(viewOrder, finalizeOrder);
+					//Configures the menu
+					MenuItem viewOrder = new MenuItem("Abrir pedido");
+					viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem(),true));
+					MenuItem finalizeOrder = new MenuItem("Finalizar pedido");
+					finalizeOrder.setOnAction(event -> showFinalizeConfirmDialog(null, row.getItem()));
+					rowMenu.getItems().addAll(viewOrder, finalizeOrder);
 
-						//Only shows the menu on non-null rows
-						row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty()))
-								.then(rowMenu).otherwise((ContextMenu) null));
-						return row;
-					}
+					//Only shows the menu on non-null rows
+					row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty()))
+							.then(rowMenu).otherwise((ContextMenu) null));
+					return row;
 				}
 		);
 	}
@@ -292,8 +276,8 @@ public class MainViewController implements Initializable {
 
 	//Opens a dialog to search an order in the database using its ID
 	@FXML
-	void searchOrderById(ActionEvent event) {
-		String orderId = "";
+	void searchOrderById() {
+		String orderId;
 		//Shows an input dialog for the user to inter the desired order
 		TextInputDialog inputDialogOrderId = new TextInputDialog("1597938444192");
 		inputDialogOrderId.setTitle("Consultar Pedido");
@@ -321,8 +305,8 @@ public class MainViewController implements Initializable {
 
 	//Opens a dialog to search orders by the phone number associated to them
 	@FXML
-	void searchOrdersByPhoneNumber(ActionEvent event) {
-		String phone = "";
+	void searchOrdersByPhoneNumber() {
+		String phone;
 		//Shows an input dialog for the user to inter the desired phone number
 		TextInputDialog inputDialogPhoneNumber = new TextInputDialog("649425570");
 		inputDialogPhoneNumber.setTitle("Consultar Pedidos");
@@ -352,7 +336,7 @@ public class MainViewController implements Initializable {
 	}
 
 	@FXML
-	void searchAllFiledOrders(ActionEvent event) {
+	void searchAllFiledOrders() {
 		//retrieves the list of orders form the server and converts it to a list of the local type
 		List<Order> ordersRetrieved =
 				OrderConverter.convertOrderList(pizzaService.getAllStoredOrders());
@@ -381,7 +365,7 @@ public class MainViewController implements Initializable {
 		Optional userAnswer = confirmationDialog.showAndWait();
 
 		//If user confirmed the dialog the operation is done
-		if (userAnswer.get() == ButtonType.OK) {
+		if (userAnswer.isPresent() && userAnswer.get() == ButtonType.OK) {
 			MainViewController.finalizeOrder(order);
 			return true;
 		}
@@ -389,7 +373,7 @@ public class MainViewController implements Initializable {
 	}
 
 	@FXML
-	void changeWaitingTime(ActionEvent event) {
+	void changeWaitingTime() {
 		try {
 			waitingTime = Integer.parseInt(tfWaitingTime.getText());
 		} catch (NumberFormatException e) {

@@ -2,40 +2,25 @@
 package com.macisdev.pizzasfxclient;
 
 import com.macisdev.orders.Order;
-import com.macisdev.pizzasfxclient.utils.OrderConverter;
-import com.macisdev.pizzasfxclient.utils.ParserXML;
-import com.macisdev.pizzasfxclient.webservicereference.PizzaShopService;
-import com.macisdev.pizzasfxclient.webservicereference.PizzaShopWebService;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-@SuppressWarnings("BusyWait")
 public class FiledOrdersViewController implements Initializable {
 	private static final ObservableList<Order> filedOrdersList = FXCollections.observableArrayList();
 

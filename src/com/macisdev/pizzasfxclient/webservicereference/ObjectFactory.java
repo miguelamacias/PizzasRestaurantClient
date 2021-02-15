@@ -34,7 +34,6 @@ public class ObjectFactory {
     private final static QName _GetStoredOrdersByPhoneNumberResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrdersByPhoneNumberResponse");
     private final static QName _SendOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrder");
     private final static QName _SendOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrderResponse");
-    private final static QName _IOException_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "IOException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.macisdev.pizzasfxclient.webservicereference
@@ -121,14 +120,6 @@ public class ObjectFactory {
      */
     public SendOrderResponse createSendOrderResponse() {
         return new SendOrderResponse();
-    }
-
-    /**
-     * Create an instance of {@link IOException }
-     * 
-     */
-    public IOException createIOException() {
-        return new IOException();
     }
 
     /**
@@ -275,19 +266,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "sendOrderResponse")
     public JAXBElement<SendOrderResponse> createSendOrderResponse(SendOrderResponse value) {
         return new JAXBElement<SendOrderResponse>(_SendOrderResponse_QNAME, SendOrderResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}
-     */
-    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "IOException")
-    public JAXBElement<IOException> createIOException(IOException value) {
-        return new JAXBElement<IOException>(_IOException_QNAME, IOException.class, null, value);
     }
 
 }

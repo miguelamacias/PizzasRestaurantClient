@@ -5,12 +5,8 @@
  */
 package com.macisdev.pizzasfxclient;
 
-import com.macisdev.orders.*;
-import java.net.URL;
-import java.text.NumberFormat;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
+import com.macisdev.orders.Order;
+import com.macisdev.orders.OrderElement;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +15,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.ResourceBundle;
 
 public class OrderDetailsViewController implements Initializable {
 	//The list of elements of the order
