@@ -1,7 +1,6 @@
 
 package com.macisdev.pizzasfxclient.webservicereference;
 
-import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -9,6 +8,7 @@ import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
+import java.util.List;
 
 
 /**
@@ -41,25 +41,25 @@ public interface PizzaShopService {
     /**
      * 
      * @return
-     *     returns java.util.List<com.macisdev.pizzasfxclient.webservicereference.Order>
+     *     returns java.util.List<java.lang.String>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getAllStoredOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetAllStoredOrders")
     @ResponseWrapper(localName = "getAllStoredOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetAllStoredOrdersResponse")
-    public List<Order> getAllStoredOrders();
+    public List<String> getAllStoredOrders();
 
     /**
      * 
      * @param arg0
      * @return
-     *     returns com.macisdev.pizzasfxclient.webservicereference.Order
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getStoredOrder", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrder")
     @ResponseWrapper(localName = "getStoredOrderResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrderResponse")
-    public Order getStoredOrder(
+    public String getStoredOrder(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -67,13 +67,13 @@ public interface PizzaShopService {
      * 
      * @param arg0
      * @return
-     *     returns java.util.List<com.macisdev.pizzasfxclient.webservicereference.Order>
+     *     returns java.util.List<java.lang.String>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getStoredOrdersByPhoneNumber", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrdersByPhoneNumber")
     @ResponseWrapper(localName = "getStoredOrdersByPhoneNumberResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetStoredOrdersByPhoneNumberResponse")
-    public List<Order> getStoredOrdersByPhoneNumber(
+    public List<String> getStoredOrdersByPhoneNumber(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 

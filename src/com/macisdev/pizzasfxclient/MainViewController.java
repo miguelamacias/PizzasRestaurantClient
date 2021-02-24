@@ -2,7 +2,6 @@
 package com.macisdev.pizzasfxclient;
 
 import com.macisdev.orders.Order;
-import com.macisdev.pizzasfxclient.utils.OrderConverter;
 import com.macisdev.pizzasfxclient.utils.ParserXML;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopService;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopWebService;
@@ -78,13 +77,17 @@ public class MainViewController implements Initializable {
 			//Arraylist to store the parsed orders
 			ArrayList<Order> ordersListFromWebService = new ArrayList<>();
 			//TODO: Delete this after testing.
-			//orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>"));
+			try {
+				orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><order_datetime>24/02/2021 - 16:35:18</order_datetime><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>", ParserXML.RESTAURANT));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 			try {
 				while (true) {//It runs forever with a delay of 5 seconds between cycles
 					//Gets the orders from the web service and parses them
 					for (String order : pizzaService.getOrders(waitingTime)) { //arg0: time expected for the order to be ready
-						ordersListFromWebService.add(ParserXML.parseXmlToOrder(order));
+						ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
 					}
 					//Add the parsed orders to the observableList used to store the table data
 					orderList.addAll(ordersListFromWebService);
@@ -288,7 +291,12 @@ public class MainViewController implements Initializable {
 			orderId = answer.get();
 
 			//retrieves the order form the server and converts it to an order of the local type
-			Order retrievedOrder = OrderConverter.convertOrder(pizzaService.getStoredOrder(orderId));
+			Order retrievedOrder = null;
+			try {
+				retrievedOrder = ParserXML.parseXmlToOrder(pizzaService.getStoredOrder(orderId), ParserXML.RESTAURANT);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 			//checks if the order have been retrieved
 			if (retrievedOrder != null) {
@@ -320,7 +328,7 @@ public class MainViewController implements Initializable {
 
 			//retrieves the list of orders form the server and converts it to a list of the local type
 			List<Order> ordersRetrieved =
-					OrderConverter.convertOrderList(pizzaService.getStoredOrdersByPhoneNumber(phone));
+					ParserXML.convertStringToOrderList(pizzaService.getStoredOrdersByPhoneNumber(phone), ParserXML.RESTAURANT);
 
 			//checks if the order have been retrieved
 			if (!ordersRetrieved.isEmpty()) {
@@ -339,7 +347,7 @@ public class MainViewController implements Initializable {
 	void searchAllFiledOrders() {
 		//retrieves the list of orders form the server and converts it to a list of the local type
 		List<Order> ordersRetrieved =
-				OrderConverter.convertOrderList(pizzaService.getAllStoredOrders());
+				ParserXML.convertStringToOrderList(pizzaService.getAllStoredOrders(), ParserXML.RESTAURANT);
 
 		//checks if the order have been retrieved
 		if (!ordersRetrieved.isEmpty()) {

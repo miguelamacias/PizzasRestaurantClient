@@ -123,22 +123,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Order }
-     * 
-     */
-    public Order createOrder() {
-        return new Order();
-    }
-
-    /**
-     * Create an instance of {@link OrderElement }
-     * 
-     */
-    public OrderElement createOrderElement() {
-        return new OrderElement();
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllStoredOrders }{@code >}
      * 
      * @param value
