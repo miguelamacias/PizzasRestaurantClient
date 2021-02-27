@@ -26,6 +26,31 @@ public interface PizzaShopService {
 
     /**
      * 
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getUnfinishedOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetUnfinishedOrders")
+    @ResponseWrapper(localName = "getUnfinishedOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetUnfinishedOrdersResponse")
+    public List<String> getUnfinishedOrders();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrders")
+    @ResponseWrapper(localName = "getOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrdersResponse")
+    public List<String> getOrders(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns java.lang.String
@@ -80,15 +105,12 @@ public interface PizzaShopService {
     /**
      * 
      * @param arg0
-     * @return
-     *     returns java.util.List<java.lang.String>
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getOrders", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrders")
-    @ResponseWrapper(localName = "getOrdersResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.GetOrdersResponse")
-    public List<String> getOrders(
+    @RequestWrapper(localName = "finalizeOrder", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.FinalizeOrder")
+    @ResponseWrapper(localName = "finalizeOrderResponse", targetNamespace = "http://pizzashopwebservice.macisdev.com/", className = "com.macisdev.pizzasfxclient.webservicereference.FinalizeOrderResponse")
+    public void finalizeOrder(
         @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
+        String arg0);
 
 }

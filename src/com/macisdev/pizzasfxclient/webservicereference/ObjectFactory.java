@@ -24,6 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _FinalizeOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "finalizeOrder");
+    private final static QName _FinalizeOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "finalizeOrderResponse");
     private final static QName _GetAllStoredOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getAllStoredOrders");
     private final static QName _GetAllStoredOrdersResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getAllStoredOrdersResponse");
     private final static QName _GetOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getOrders");
@@ -32,6 +34,8 @@ public class ObjectFactory {
     private final static QName _GetStoredOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrderResponse");
     private final static QName _GetStoredOrdersByPhoneNumber_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrdersByPhoneNumber");
     private final static QName _GetStoredOrdersByPhoneNumberResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getStoredOrdersByPhoneNumberResponse");
+    private final static QName _GetUnfinishedOrders_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getUnfinishedOrders");
+    private final static QName _GetUnfinishedOrdersResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "getUnfinishedOrdersResponse");
     private final static QName _SendOrder_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrder");
     private final static QName _SendOrderResponse_QNAME = new QName("http://pizzashopwebservice.macisdev.com/", "sendOrderResponse");
 
@@ -40,6 +44,22 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link FinalizeOrder }
+     * 
+     */
+    public FinalizeOrder createFinalizeOrder() {
+        return new FinalizeOrder();
+    }
+
+    /**
+     * Create an instance of {@link FinalizeOrderResponse }
+     * 
+     */
+    public FinalizeOrderResponse createFinalizeOrderResponse() {
+        return new FinalizeOrderResponse();
     }
 
     /**
@@ -107,6 +127,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetUnfinishedOrders }
+     * 
+     */
+    public GetUnfinishedOrders createGetUnfinishedOrders() {
+        return new GetUnfinishedOrders();
+    }
+
+    /**
+     * Create an instance of {@link GetUnfinishedOrdersResponse }
+     * 
+     */
+    public GetUnfinishedOrdersResponse createGetUnfinishedOrdersResponse() {
+        return new GetUnfinishedOrdersResponse();
+    }
+
+    /**
      * Create an instance of {@link SendOrder }
      * 
      */
@@ -120,6 +156,32 @@ public class ObjectFactory {
      */
     public SendOrderResponse createSendOrderResponse() {
         return new SendOrderResponse();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FinalizeOrder }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link FinalizeOrder }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "finalizeOrder")
+    public JAXBElement<FinalizeOrder> createFinalizeOrder(FinalizeOrder value) {
+        return new JAXBElement<FinalizeOrder>(_FinalizeOrder_QNAME, FinalizeOrder.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FinalizeOrderResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link FinalizeOrderResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "finalizeOrderResponse")
+    public JAXBElement<FinalizeOrderResponse> createFinalizeOrderResponse(FinalizeOrderResponse value) {
+        return new JAXBElement<FinalizeOrderResponse>(_FinalizeOrderResponse_QNAME, FinalizeOrderResponse.class, null, value);
     }
 
     /**
@@ -224,6 +286,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getStoredOrdersByPhoneNumberResponse")
     public JAXBElement<GetStoredOrdersByPhoneNumberResponse> createGetStoredOrdersByPhoneNumberResponse(GetStoredOrdersByPhoneNumberResponse value) {
         return new JAXBElement<GetStoredOrdersByPhoneNumberResponse>(_GetStoredOrdersByPhoneNumberResponse_QNAME, GetStoredOrdersByPhoneNumberResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUnfinishedOrders }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetUnfinishedOrders }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getUnfinishedOrders")
+    public JAXBElement<GetUnfinishedOrders> createGetUnfinishedOrders(GetUnfinishedOrders value) {
+        return new JAXBElement<GetUnfinishedOrders>(_GetUnfinishedOrders_QNAME, GetUnfinishedOrders.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUnfinishedOrdersResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GetUnfinishedOrdersResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://pizzashopwebservice.macisdev.com/", name = "getUnfinishedOrdersResponse")
+    public JAXBElement<GetUnfinishedOrdersResponse> createGetUnfinishedOrdersResponse(GetUnfinishedOrdersResponse value) {
+        return new JAXBElement<GetUnfinishedOrdersResponse>(_GetUnfinishedOrdersResponse_QNAME, GetUnfinishedOrdersResponse.class, null, value);
     }
 
     /**

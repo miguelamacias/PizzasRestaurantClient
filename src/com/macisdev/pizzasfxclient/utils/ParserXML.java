@@ -65,6 +65,8 @@ public class ParserXML {
 		order.setDeliveryMethod(elementOrderInfo.getElementsByTagName("delivery_method").item(0).getTextContent());
 		order.setCustomerAddress(elementOrderInfo.getElementsByTagName("customer_address").item(0).getTextContent());
 		order.setPaymentMethod(elementOrderInfo.getElementsByTagName("payment_method").item(0).getTextContent());
+		order.setOrderStatus(Integer.parseInt(
+				elementOrderInfo.getElementsByTagName("order_status").item(0).getTextContent()));
 		double totalPrice = Double.parseDouble(elementOrderInfo.getElementsByTagName("total_price").
 				item(0).getTextContent());
 		order.setTotalPrice(totalPrice);
@@ -118,7 +120,7 @@ public class ParserXML {
 
 		if (client == WEBSERVICE) {
 			Element orderId = document.createElement("order_id");
-			orderId.appendChild(document.createTextNode(order.getOrderDateTime()));
+			orderId.appendChild(document.createTextNode(order.getOrderId()));
 			orderInfo.appendChild(orderId);
 		}
 
@@ -145,6 +147,10 @@ public class ParserXML {
 		Element payment = document.createElement("payment_method");
 		payment.appendChild(document.createTextNode(order.getPaymentMethod()));
 		orderInfo.appendChild(payment);
+
+		Element status = document.createElement("order_status");
+		status.appendChild(document.createTextNode(String.valueOf(order.getOrderStatus())));
+		orderInfo.appendChild(status);
 
 		//Adds the total price to the xml file
 		double totalPrice = 0;

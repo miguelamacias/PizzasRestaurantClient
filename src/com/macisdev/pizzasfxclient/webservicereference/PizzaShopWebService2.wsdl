@@ -56,6 +56,7 @@
       <xs:element minOccurs="0" name="orderDateTime" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="orderElements" nillable="true" type="tns:orderElement"/>
       <xs:element minOccurs="0" name="orderId" type="xs:string"/>
+      <xs:element name="orderStatus" type="xs:int"/>
       <xs:element minOccurs="0" name="paymentMethod" type="xs:string"/>
       <xs:element name="totalPrice" type="xs:double"/>
     </xs:sequence>

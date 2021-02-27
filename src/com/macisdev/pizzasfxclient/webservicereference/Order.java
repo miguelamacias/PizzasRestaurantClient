@@ -1,12 +1,12 @@
 
 package com.macisdev.pizzasfxclient.webservicereference;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="orderDateTime" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="orderElements" type="{http://pizzashopwebservice.macisdev.com/}orderElement" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="orderId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="orderStatus" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="paymentMethod" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="totalPrice" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
  *       &lt;/sequence&gt;
@@ -45,6 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "orderDateTime",
     "orderElements",
     "orderId",
+    "orderStatus",
     "paymentMethod",
     "totalPrice"
 })
@@ -58,6 +60,7 @@ public class Order {
     @XmlElement(nillable = true)
     protected List<OrderElement> orderElements;
     protected String orderId;
+    protected int orderStatus;
     protected String paymentMethod;
     protected double totalPrice;
 
@@ -232,6 +235,22 @@ public class Order {
      */
     public void setOrderId(String value) {
         this.orderId = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad orderStatus.
+     * 
+     */
+    public int getOrderStatus() {
+        return orderStatus;
+    }
+
+    /**
+     * Define el valor de la propiedad orderStatus.
+     * 
+     */
+    public void setOrderStatus(int value) {
+        this.orderStatus = value;
     }
 
     /**
