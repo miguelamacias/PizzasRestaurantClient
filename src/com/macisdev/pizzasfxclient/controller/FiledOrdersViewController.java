@@ -1,5 +1,5 @@
 
-package com.macisdev.pizzasfxclient;
+package com.macisdev.pizzasfxclient.controller;
 
 import com.macisdev.orders.Order;
 import javafx.collections.FXCollections;
@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;

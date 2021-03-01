@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.macisdev.pizzasfxclient.OrderDetailsViewController">
+            fx:controller="com.macisdev.pizzasfxclient.controller.OrderDetailsViewController">
    <TableView fx:id="elementsTable" layoutX="14.0" layoutY="191.0" prefHeight="348.0" prefWidth="787.0">
       <columnResizePolicy>
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
