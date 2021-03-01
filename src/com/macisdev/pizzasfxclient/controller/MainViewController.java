@@ -1,7 +1,8 @@
 
-package com.macisdev.pizzasfxclient;
+package com.macisdev.pizzasfxclient.controller;
 
 import com.macisdev.orders.Order;
+import com.macisdev.pizzasfxclient.PizzasRestaurantClient;
 import com.macisdev.pizzasfxclient.utils.ParserXML;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopService;
 import com.macisdev.pizzasfxclient.webservicereference.PizzaShopWebService;
@@ -77,12 +78,6 @@ public class MainViewController implements Initializable {
 			//Arraylist to store the parsed orders
 			ArrayList<Order> ordersListFromWebService = new ArrayList<>();
 
-			//Retrieves the pending orders
-			for (String order : pizzaService.getUnfinishedOrders()) { //arg0: time expected for the order to be ready
-				System.out.println(order);
-				ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
-			}
-
 			//TODO: Delete this after testing.
 			try {
 				orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><order_status>1</order_status><order_datetime>24/02/2021 - 16:35:18</order_datetime><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>", ParserXML.RESTAURANT));
@@ -91,6 +86,13 @@ public class MainViewController implements Initializable {
 			}
 
 			try {
+				//Retrieves the pending orders on startup
+				for (String order : pizzaService.getUnfinishedOrders()) { //arg0: time expected for the order to be ready
+					System.out.println(order);
+					ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
+				}
+
+				//Retrieves the new orders
 				while (true) {//It runs forever with a delay of 5 seconds between cycles
 					//Gets the orders from the web service and parses them
 					for (String order : pizzaService.getOrders(waitingTime)) { //arg0: time expected for the order to be ready
@@ -106,9 +108,8 @@ public class MainViewController implements Initializable {
 				}
 			} catch (Exception e) {
 				System.err.println("Exception: The background thread has stopped unexpectedly");
-				e.printStackTrace();
-				//Inform the user that there is a problem with the connection
 
+				//Inform the user that there is a problem with the connection
 				Platform.runLater(() -> { //GUI cannot be updated from the bg thread
 					statusLabel.setText("⚠ Desconectado");
 					statusLabel.setTextFill(Color.RED);
@@ -150,6 +151,20 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void reconnectToServer() {
 		startServerThread();
+	}
+
+	@FXML
+	private void closeApplication() {
+		System.exit(0);
+	}
+
+	@FXML
+	private void openAboutWindow() {
+		Alert dialogOrderNotFound = new Alert(AlertType.INFORMATION);
+		dialogOrderNotFound.setTitle("Acerca de...");
+		dialogOrderNotFound.setHeaderText("Gestión Pizzería App v1.0");
+		dialogOrderNotFound.setContentText("Miguel Ángel Macías\nGPL-3.0 License\n2021");
+		dialogOrderNotFound.showAndWait();
 	}
 
 	public static void configureTable(TableView<Order> tableToConfigure, ObservableList<Order> dataSource) {

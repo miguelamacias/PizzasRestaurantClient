@@ -16,7 +16,7 @@ public class PizzasRestaurantClient extends Application {
 	public void start(Stage stage) {
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+			root = FXMLLoader.load(getClass().getResource("view/MainView.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
