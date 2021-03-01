@@ -163,6 +163,7 @@ public class MainViewController implements Initializable {
 		Alert dialogOrderNotFound = new Alert(AlertType.INFORMATION);
 		dialogOrderNotFound.setTitle("Acerca de...");
 		dialogOrderNotFound.setHeaderText("Gestión Pizzería App v1.0");
+
 		dialogOrderNotFound.setContentText("Miguel Ángel Macías\nGPL-3.0 License\n2021");
 		dialogOrderNotFound.showAndWait();
 	}
