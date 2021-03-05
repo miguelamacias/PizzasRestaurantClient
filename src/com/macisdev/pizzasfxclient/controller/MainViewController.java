@@ -250,7 +250,7 @@ public class MainViewController implements Initializable {
     static void openOrderDetailsWindow(Order order, boolean currentOrder) {
 		try {
 			//Creates a new window and sets its fxml file
-			FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("OrderDetailsView.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(PizzasRestaurantClient.class.getResource("view/OrderDetailsView.fxml"));
 			Parent root = fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
@@ -278,7 +278,7 @@ public class MainViewController implements Initializable {
 	void openFiledOrdersWindow(List<Order> filedOrdersList) {
 		try {
 			//Creates a new window and sets its fxml file
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FiledOrdersView.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(PizzasRestaurantClient.class.getResource("view/FiledOrdersView.fxml"));
 			Parent root = fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
