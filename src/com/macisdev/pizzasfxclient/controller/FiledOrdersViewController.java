@@ -2,6 +2,7 @@
 package com.macisdev.pizzasfxclient.controller;
 
 import com.macisdev.orders.Order;
+import com.macisdev.pizzasfxclient.PizzasRestaurantClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,7 +52,7 @@ public class FiledOrdersViewController implements Initializable {
     void openOrderDetailsWindow(Order order) {
 		try {
 			//Creates a new window and sets its fxml file
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OrderDetailsView.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(PizzasRestaurantClient.class.getResource("view/OrderDetailsView.fxml"));
 			Parent root = fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));

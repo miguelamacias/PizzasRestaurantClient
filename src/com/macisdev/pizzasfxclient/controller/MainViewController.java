@@ -78,13 +78,6 @@ public class MainViewController implements Initializable {
 			//Arraylist to store the parsed orders
 			ArrayList<Order> ordersListFromWebService = new ArrayList<>();
 
-			//TODO: Delete this after testing.
-			try {
-				orderList.add(ParserXML.parseXmlToOrder("<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><order_info><order_id>1587922864850</order_id><order_status>1</order_status><order_datetime>24/02/2021 - 16:35:18</order_datetime><customer_name>Miguel Angel Macias</customer_name><customer_phone>649425570</customer_phone><delivery_method>Envío a domicilio</delivery_method><customer_address>C/Valerito 36</customer_address><payment_method>Tarjeta</payment_method><total_price>31.20</total_price></order_info><pizza><code>1</code><name>Monster</name><size>Mediana</size><extras>EXTRA: Champiñones, Pepperoni, Atún, Cebolla, Pimiento, 4 Quesos, Aceitunas </extras><price>8.5</price></pizza><pizza><code>4</code><name>Barbacoa</name><size>Familiar</size><extras>EXTRA: Ternera </extras><price>16.2</price></pizza><pizza><code>8</code><name>Hawaiana</name><size>Mediana</size><extras>SIN: Piña </extras><price>6.5</price></pizza></order>", ParserXML.RESTAURANT));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
 			try {
 				//Retrieves the pending orders on startup
 				for (String order : pizzaService.getUnfinishedOrders()) { //arg0: time expected for the order to be ready
@@ -169,29 +162,29 @@ public class MainViewController implements Initializable {
 
 	public static void configureTable(TableView<Order> tableToConfigure, ObservableList<Order> dataSource) {
 		//Creates the columns of the table
-		TableColumn orderIdColumn = new TableColumn("Cod. pedido");
-		orderIdColumn.setCellValueFactory(new PropertyValueFactory("orderId"));
+		TableColumn<Order, String> orderIdColumn = new TableColumn<>("Cod. pedido");
+		orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
 
-		TableColumn orderDateTimeColumn = new TableColumn("Fecha - Hora");
-		orderDateTimeColumn.setCellValueFactory(new PropertyValueFactory("orderDateTime"));
+		TableColumn<Order, String> orderDateTimeColumn = new TableColumn<>("Fecha - Hora");
+		orderDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("orderDateTime"));
 
-		TableColumn customerNameColumn = new TableColumn("Nombre cliente");
-		customerNameColumn.setCellValueFactory(new PropertyValueFactory("customerName"));
+		TableColumn<Order, String> customerNameColumn = new TableColumn<>("Nombre cliente");
+		customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
 
-		TableColumn customerPhoneColumn = new TableColumn("Teléfono");
-		customerPhoneColumn.setCellValueFactory(new PropertyValueFactory("customerPhone"));
+		TableColumn<Order, String> customerPhoneColumn = new TableColumn<>("Teléfono");
+		customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
 
-		TableColumn customerAddressColumn = new TableColumn("Dirección");
-		customerAddressColumn.setCellValueFactory(new PropertyValueFactory("customerAddress"));
+		TableColumn<Order, String> customerAddressColumn = new TableColumn<>("Dirección");
+		customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
 
-		TableColumn deliveryMethodColumn = new TableColumn("Tipo pedido");
-		deliveryMethodColumn.setCellValueFactory(new PropertyValueFactory("deliveryMethod"));
+		TableColumn<Order, String> deliveryMethodColumn = new TableColumn<>("Tipo pedido");
+		deliveryMethodColumn.setCellValueFactory(new PropertyValueFactory<>("deliveryMethod"));
 
-		TableColumn paymentMethodColumn = new TableColumn("Tipo pago");
-		paymentMethodColumn.setCellValueFactory(new PropertyValueFactory("paymentMethod"));
+		TableColumn<Order, String> paymentMethodColumn = new TableColumn<>("Tipo pago");
+		paymentMethodColumn.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
 
-		TableColumn totalPriceColumn = new TableColumn("Importe");
-		totalPriceColumn.setCellValueFactory(new PropertyValueFactory("totalPrice"));
+		TableColumn<Order, Double> totalPriceColumn = new TableColumn<>("Importe");
+		totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 		//Formats the price properly
 		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 		totalPriceColumn.setCellFactory(tc -> new TableCell<Order, Double>() {
@@ -318,6 +311,7 @@ public class MainViewController implements Initializable {
 			Order retrievedOrder = null;
 			try {
 				retrievedOrder = ParserXML.parseXmlToOrder(pizzaService.getStoredOrder(orderId), ParserXML.RESTAURANT);
+				System.out.println(pizzaService.getStoredOrder(orderId));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

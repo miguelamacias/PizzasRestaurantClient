@@ -14,11 +14,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
@@ -150,6 +156,19 @@ public class OrderDetailsViewController implements Initializable {
 		//controls the visibility of the finish order button according to the kind of order
 		btnFinishOrder.setVisible(currentOrder);
 
+	}
+
+	//generates an invoice for the selected order
+	@FXML
+	private void generateInvoice(ActionEvent event) throws URISyntaxException, IOException {
+		String url = String.format("http://localhost:8080/invoices/invoice?id=%s", order.getOrderId());
+		URI uri = new URI(url);
+		if (Desktop.isDesktopSupported()) {
+			Desktop desktop = Desktop.getDesktop();
+			if (desktop.isSupported(Desktop.Action.BROWSE)) {
+				desktop.browse(uri);
+			}
+		}
 	}
 
 	//Sets the order as finalized in the main controller
