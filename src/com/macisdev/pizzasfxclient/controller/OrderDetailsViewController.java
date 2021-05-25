@@ -160,14 +160,22 @@ public class OrderDetailsViewController implements Initializable {
 
 	//generates an invoice for the selected order
 	@FXML
-	private void generateInvoice(ActionEvent event) throws URISyntaxException, IOException {
-		String url = String.format("http://localhost:8080/invoices/invoice?id=%s", order.getOrderId());
-		URI uri = new URI(url);
-		if (Desktop.isDesktopSupported()) {
-			Desktop desktop = Desktop.getDesktop();
-			if (desktop.isSupported(Desktop.Action.BROWSE)) {
-				desktop.browse(uri);
+	private void generateInvoice(ActionEvent event){
+		generateInvoice(order.getOrderId());
+	}
+
+	public static void generateInvoice(String orderId) {
+		try {
+			String url = String.format("http://localhost:8080/invoices/invoice?id=%s", orderId);
+			URI uri = new URI(url);
+			if (Desktop.isDesktopSupported()) {
+				Desktop desktop = Desktop.getDesktop();
+				if (desktop.isSupported(Desktop.Action.BROWSE)) {
+					desktop.browse(uri);
+				}
 			}
+		} catch (URISyntaxException | IOException e) {
+			e.printStackTrace();
 		}
 	}
 

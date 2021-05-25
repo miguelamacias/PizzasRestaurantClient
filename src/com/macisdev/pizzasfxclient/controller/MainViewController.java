@@ -58,7 +58,7 @@ public class MainViewController implements Initializable {
 		tfWaitingTime.setText("30");
 		getServerConnection();
 		startServerThread();
-		configureTable(orderTable, orderList);
+		configureTable(orderTable, orderList, false);
 	}
 
 	public void getServerConnection() {
@@ -160,7 +160,8 @@ public class MainViewController implements Initializable {
 		dialogOrderNotFound.showAndWait();
 	}
 
-	public static void configureTable(TableView<Order> tableToConfigure, ObservableList<Order> dataSource) {
+	public static void configureTable(TableView<Order> tableToConfigure,
+									  ObservableList<Order> dataSource, boolean filedView) {
 		//Creates the columns of the table
 		TableColumn<Order, String> orderIdColumn = new TableColumn<>("Cod. pedido");
 		orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
@@ -201,6 +202,7 @@ public class MainViewController implements Initializable {
 		});
 
 		//Adds the created columns to the table
+		//noinspection unchecked
 		tableToConfigure.getColumns().addAll(orderIdColumn, orderDateTimeColumn, customerNameColumn, customerPhoneColumn,
 				customerAddressColumn, deliveryMethodColumn, paymentMethodColumn, totalPriceColumn);
 
@@ -219,7 +221,16 @@ public class MainViewController implements Initializable {
 					viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem(),true));
 					MenuItem finalizeOrder = new MenuItem("Finalizar pedido");
 					finalizeOrder.setOnAction(event -> showFinalizeConfirmDialog(null, row.getItem()));
-					rowMenu.getItems().addAll(viewOrder, finalizeOrder);
+					MenuItem generateInvoice = new MenuItem("Generar Factura");
+					generateInvoice.setOnAction(event -> OrderDetailsViewController.generateInvoice(
+							row.getItem().getOrderId()));
+
+
+					if (filedView) {
+						rowMenu.getItems().addAll(viewOrder, generateInvoice);
+					} else {
+						rowMenu.getItems().addAll(viewOrder, finalizeOrder, generateInvoice);
+					}
 
 					//Only shows the menu on non-null rows
 					row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty()))

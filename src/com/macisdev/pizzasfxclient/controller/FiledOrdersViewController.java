@@ -30,7 +30,7 @@ public class FiledOrdersViewController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		MainViewController.configureTable(orderTable, filedOrdersList);
+		MainViewController.configureTable(orderTable, filedOrdersList, true);
 	}
 
 	void setFiledOrdersList (List<Order> orders) {
