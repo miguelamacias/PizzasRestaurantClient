@@ -80,7 +80,7 @@ public class MainViewController implements Initializable {
 
 			try {
 				//Retrieves the pending orders on startup
-				for (String order : pizzaService.getUnfinishedOrders()) { //arg0: time expected for the order to be ready
+				for (String order : pizzaService.getUnfinishedOrders()) {
 					System.out.println(order);
 					ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
 				}
@@ -323,8 +323,8 @@ public class MainViewController implements Initializable {
 			try {
 				retrievedOrder = ParserXML.parseXmlToOrder(pizzaService.getStoredOrder(orderId), ParserXML.RESTAURANT);
 				System.out.println(pizzaService.getStoredOrder(orderId));
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (NullPointerException e) {
+				System.out.println("Order couldn't be retrieved");;
 			}
 
 			//checks if the order have been retrieved
