@@ -13,8 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -176,6 +178,46 @@ public class OrderDetailsViewController implements Initializable {
 			}
 		} catch (URISyntaxException | IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void printOrder(ActionEvent event) {
+		//Creates the text to print
+		StringBuilder orderString = new StringBuilder();
+		orderString.append(order.getOrderId()).append("\n");
+		orderString.append(order.getOrderDateTime()).append("\n");
+		orderString.append(order.getCustomerName()).append(" - ").append(order.getCustomerPhone()).append("\n");
+		orderString.append(order.getCustomerAddress()).append("\n");
+		orderString.append("-------------------------------------").append("\n");
+		for (OrderElement element : orderElementsList) {
+			orderString.append("\t");
+			orderString.append("#").append(element.getCode()).append(" - ").append(element.getName());
+			orderString.append(" [").append(element.getSize()).append("] ").append("\n");
+			if (!element.getExtras().isEmpty()) {
+				orderString.append("\t\t").append(element.getExtras()).append("\n");
+			}
+		}
+
+		// Create a printer job for the default printer
+		PrinterJob job = PrinterJob.createPrinterJob();
+
+		if (job != null) {
+			// Print the node
+			Label labelToPrint = new Label();
+			labelToPrint.setText(orderString.toString());
+			boolean printed = job.printPage(labelToPrint);
+
+			if (printed) {
+				// End the printer job
+				job.endJob();
+			} else {
+				Alert dialogErrorPrinting = new Alert(Alert.AlertType.ERROR);
+				dialogErrorPrinting.setTitle("Error al imprimir");
+				dialogErrorPrinting.setHeaderText("No se ha podido imprimir el pedido");
+				dialogErrorPrinting.setContentText("Compruebe que la impresora esté operativa");
+				dialogErrorPrinting.showAndWait();
+			}
 		}
 	}
 
