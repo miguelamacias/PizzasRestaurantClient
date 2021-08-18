@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 @SuppressWarnings("BusyWait")
 public class MainViewController implements Initializable {
@@ -68,7 +69,7 @@ public class MainViewController implements Initializable {
 			service = new PizzaShopWebService();
 			pizzaService = service.getPizzaShopServicePort();
 		} catch (WebServiceException e) {
-			System.out.println("ERROR: The server is down!");
+			System.err.println("ERROR: The server is down!");
 		}
 	}
 
@@ -81,7 +82,6 @@ public class MainViewController implements Initializable {
 			try {
 				//Retrieves the pending orders on startup
 				for (String order : pizzaService.getUnfinishedOrders()) {
-					System.out.println(order);
 					ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
 				}
 
@@ -89,12 +89,10 @@ public class MainViewController implements Initializable {
 				while (true) {//It runs forever with a delay of 5 seconds between cycles
 					//Gets the orders from the web service and parses them
 					for (String order : pizzaService.getOrders(waitingTime)) { //arg0: time expected for the order to be ready
-						System.out.println(order);
 						ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
 					}
 					//Add the parsed orders to the observableList used to store the table data
 					orderList.addAll(ordersListFromWebService);
-					System.out.println("order gotten: " + ordersListFromWebService.size());
 					ordersListFromWebService.clear();
 
 					Thread.sleep(5000);
@@ -216,16 +214,16 @@ public class MainViewController implements Initializable {
 					//Creates the menu
 					final ContextMenu rowMenu = new ContextMenu();
 
-					//Configures the menu
+					//Creates the options of the menu
 					MenuItem viewOrder = new MenuItem("Abrir pedido");
 					viewOrder.setOnAction(event -> openOrderDetailsWindow(row.getItem(),true));
 					MenuItem finalizeOrder = new MenuItem("Finalizar pedido");
 					finalizeOrder.setOnAction(event -> showFinalizeConfirmDialog(null, row.getItem()));
-					MenuItem generateInvoice = new MenuItem("Generar Factura");
+					MenuItem generateInvoice = new MenuItem("Generar factura");
 					generateInvoice.setOnAction(event -> OrderDetailsViewController.generateInvoice(
 							row.getItem().getOrderId()));
 
-
+					//Add the options to the menu
 					if (filedView) {
 						rowMenu.getItems().addAll(viewOrder, generateInvoice);
 					} else {
@@ -309,8 +307,13 @@ public class MainViewController implements Initializable {
 	@FXML
 	void searchOrderById() {
 		String orderId;
+
+		//Show the last searched id as default
+		Preferences pref = Preferences.userNodeForPackage(MainViewController.class);
+		String lastId = pref.get("lastIdSearched","");
+
 		//Shows an input dialog for the user to inter the desired order
-		TextInputDialog inputDialogOrderId = new TextInputDialog("1597938444192");
+		TextInputDialog inputDialogOrderId = new TextInputDialog(lastId);
 		inputDialogOrderId.setTitle("Consultar Pedido");
 		inputDialogOrderId.setHeaderText("Consultar pedido por código");
 		inputDialogOrderId.setContentText("Introduzca el código del pedido a consultar:");
@@ -318,13 +321,15 @@ public class MainViewController implements Initializable {
 		if (answer.isPresent()) {
 			orderId = answer.get();
 
+			//Store the searched id to show it next time the window is opened
+			pref.put("lastIdSearched", orderId);
+
 			//retrieves the order form the server and converts it to an order of the local type
 			Order retrievedOrder = null;
 			try {
 				retrievedOrder = ParserXML.parseXmlToOrder(pizzaService.getStoredOrder(orderId), ParserXML.RESTAURANT);
-				System.out.println(pizzaService.getStoredOrder(orderId));
 			} catch (NullPointerException e) {
-				System.out.println("Order couldn't be retrieved");;
+				System.err.println("Order couldn't be retrieved");;
 			}
 
 			//checks if the order have been retrieved
@@ -344,8 +349,13 @@ public class MainViewController implements Initializable {
 	@FXML
 	void searchOrdersByPhoneNumber() {
 		String phone;
+
+		//Show the last searched phone as default
+		Preferences pref = Preferences.userNodeForPackage(MainViewController.class);
+		String lastPhone = pref.get("lastPhoneSearched","");
+
 		//Shows an input dialog for the user to inter the desired phone number
-		TextInputDialog inputDialogPhoneNumber = new TextInputDialog("649425570");
+		TextInputDialog inputDialogPhoneNumber = new TextInputDialog(lastPhone);
 		inputDialogPhoneNumber.setTitle("Consultar Pedidos");
 		inputDialogPhoneNumber.setHeaderText("Consultar pedido por número de teléfono");
 		inputDialogPhoneNumber.setContentText("Introduzca el número de teléfono a consultar:");
@@ -358,6 +368,9 @@ public class MainViewController implements Initializable {
 			//retrieves the list of orders form the server and converts it to a list of the local type
 			List<Order> ordersRetrieved =
 					ParserXML.convertStringToOrderList(pizzaService.getStoredOrdersByPhoneNumber(phone), ParserXML.RESTAURANT);
+
+			//Store the searched number to show it next time the window is opened
+			pref.put("lastPhoneSearched", phone);
 
 			//checks if the order have been retrieved
 			if (!ordersRetrieved.isEmpty()) {
@@ -411,14 +424,24 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	void changeWaitingTime() {
-		try {
-			waitingTime = Integer.parseInt(tfWaitingTime.getText());
-		} catch (NumberFormatException e) {
-			Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
-			dialogOrderNotFound.setTitle("Tiempo inválido");
-			dialogOrderNotFound.setHeaderText("El valor introducido no es válido.");
-			dialogOrderNotFound.setContentText("Por favor, introduzca el tiempo de espera estimado en minutos.");
-			dialogOrderNotFound.showAndWait();
+		//Shows an input dialog for the user to enter the waiting time
+		TextInputDialog inputDialogPhoneNumber = new TextInputDialog();
+		inputDialogPhoneNumber.setTitle("Tiempo de espera");
+		inputDialogPhoneNumber.setHeaderText("Tiempo de espera medio para pedidos");
+		inputDialogPhoneNumber.setContentText("Introduzca los minutos de espera para nuevos pedidos:");
+		Optional<String> answer = inputDialogPhoneNumber.showAndWait();
+
+		if (answer.isPresent()) {
+			try {
+				waitingTime = Integer.parseInt(answer.get());
+				tfWaitingTime.setText(answer.get());
+			} catch (NumberFormatException e) {
+				Alert dialogOrderNotFound = new Alert(AlertType.ERROR);
+				dialogOrderNotFound.setTitle("Tiempo inválido");
+				dialogOrderNotFound.setHeaderText("El valor introducido no es válido.");
+				dialogOrderNotFound.setContentText("Por favor, introduzca el tiempo de espera estimado en minutos.");
+				dialogOrderNotFound.showAndWait();
+			}
 		}
 	}
 	

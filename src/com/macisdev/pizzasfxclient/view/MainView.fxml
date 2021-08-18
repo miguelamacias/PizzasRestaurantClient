@@ -37,8 +37,8 @@
                          </font>
                      </Label>
                      <Label text="Tiempo de espera:" />
-                     <TextField fx:id="tfWaitingTime" onAction="#changeWaitingTime" prefHeight="31.0" prefWidth="65.0" />
-                     <Button mnemonicParsing="false" onAction="#changeWaitingTime" text="Cambiar tiempo espera" />
+                     <TextField fx:id="tfWaitingTime" editable="false" prefHeight="31.0" prefWidth="65.0" />
+                     <Button mnemonicParsing="false" onAction="#changeWaitingTime" text="Cambiar tiempo espera..." />
                      <Label fx:id="statusLabel" text="Conectando...">
                          <font>
                              <Font name="System Bold" size="18.0" />
