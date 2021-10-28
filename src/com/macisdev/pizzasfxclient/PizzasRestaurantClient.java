@@ -7,23 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class PizzasRestaurantClient extends Application {
 	private static Stage primaryStage;
 
 	@Override
 	public void start(Stage stage) {
+
 		Parent root = null;
 		try {
 			root = FXMLLoader.load(getClass().getResource("view/MainView.fxml"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace(System.out);
 		}
 
-		assert root != null;
 		Scene scene = new Scene(root);
-		
 		stage.setScene(scene);
 		stage.setTitle("Gestión Pizzería Alpha");
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/pizza_icon.png")));

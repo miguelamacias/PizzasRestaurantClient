@@ -43,6 +43,8 @@ public class MainViewController implements Initializable {
 
 	private static PizzaShopService pizzaService;
 
+	private boolean recoveringFromError = false;
+
 	@FXML
 	private TableView<Order> orderTable;
 
@@ -91,6 +93,13 @@ public class MainViewController implements Initializable {
 					for (String order : pizzaService.getOrders(waitingTime)) { //arg0: time expected for the order to be ready
 						ordersListFromWebService.add(ParserXML.parseXmlToOrder(order, ParserXML.RESTAURANT));
 					}
+
+					//Avoid duplicates when recovered from a connection problem
+					if (recoveringFromError) {
+						recoveringFromError = false;
+						orderList.clear();
+					}
+
 					//Add the parsed orders to the observableList used to store the table data
 					orderList.addAll(ordersListFromWebService);
 					ordersListFromWebService.clear();
@@ -99,6 +108,7 @@ public class MainViewController implements Initializable {
 				}
 			} catch (Exception e) {
 				System.err.println("Exception: The background thread has stopped unexpectedly");
+				recoveringFromError = true;
 
 				//Inform the user that there is a problem with the connection
 				Platform.runLater(() -> { //GUI cannot be updated from the bg thread
@@ -329,7 +339,7 @@ public class MainViewController implements Initializable {
 			try {
 				retrievedOrder = ParserXML.parseXmlToOrder(pizzaService.getStoredOrder(orderId), ParserXML.RESTAURANT);
 			} catch (NullPointerException e) {
-				System.err.println("Order couldn't be retrieved");;
+				System.err.println("Order couldn't be retrieved");
 			}
 
 			//checks if the order have been retrieved

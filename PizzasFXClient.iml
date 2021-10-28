@@ -14,7 +14,7 @@
     <content url="file://$MODULE_DIR$/out" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="JAX-WS-Glassfish / JAX-WS 2.2 RI / Metro 1.X / JWSDP 2.2" level="project" />
-    <orderEntry type="library" name="ordersLibrary" level="project" />
+    <orderEntry type="library" exported="" name="JAX-WS-Glassfish / JAX-WS 2.2 RI / Metro 1.X / JWSDP 2.2" level="project" />
+    <orderEntry type="library" exported="" name="ordersLibrary" level="project" />
   </component>
 </module>
